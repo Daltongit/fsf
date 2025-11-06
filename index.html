@@ -45,9 +45,7 @@
       box-shadow:0 4px 12px rgba(0,0,0,.03);
       backdrop-filter:saturate(160%) blur(4px);
     }
-    .header-inner{
-      display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 0;
-    }
+    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 0}
     .brand{display:flex;align-items:center;gap:1rem;transform:translateZ(0)}
     .brand img{width:110px;height:110px;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(196,30,58,.18));transition:transform .35s var(--t-fast)}
     .brand:hover img{transform:scale(1.03) rotate(.8deg)}
@@ -56,9 +54,7 @@
     .chip{background:var(--gold);color:#fff;border-radius:999px;padding:.4rem .8rem;font-weight:800;box-shadow:0 8px 22px rgba(212,165,116,.35)}
 
     /* Hero */
-    .hero{
-      position:relative;overflow:hidden;background:#111216;color:#fff;border-bottom:3px solid var(--gold);
-    }
+    .hero{position:relative;overflow:hidden;background:#111216;color:#fff;border-bottom:3px solid var(--gold)}
     .hero::before{
       content:"";position:absolute;inset:-20% -10% auto; height:360px;
       background:
@@ -73,11 +69,7 @@
     .hero-badges .chip{background:#1C1F26;border:1px solid #2a2f39;color:#e5e7eb;box-shadow:none}
 
     /* Sección acordeones */
-    .grid{
-      display:grid;gap:1.25rem;padding:2rem 0 2.5rem;
-      grid-template-columns:1fr;
-    }
-
+    .grid{display:grid;gap:1.25rem;padding:2rem 0 2.5rem;grid-template-columns:1fr}
     .accordion{
       background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
       box-shadow:var(--shadow-sm); transform:translateZ(0);
@@ -101,7 +93,6 @@
     .icon-box svg{width:26px;height:26px}
     .acc-title{font-weight:900;letter-spacing:.4px}
     .acc-sub{color:var(--muted);font-weight:600;font-size:.9rem}
-
     .chev{
       width:36px;height:36px;border-radius:10px;border:2px solid #d1d5db;display:grid;place-items:center;color:#374151;
       transition:transform .35s var(--t-fast), background .25s;
@@ -109,23 +100,14 @@
     .header-btn:hover .chev{background:#111;color:#fff;border-color:#111}
     .chev svg{width:18px;height:18px;transition:transform .35s var(--t-fast)}
     .header-btn[aria-expanded="true"] .chev svg{transform:rotate(180deg)}
-
-    .panel{
-      height:0; overflow:hidden; transform:translateZ(0);
-      transition:height .45s var(--t-fast);
-    }
-    .panel.open{ /* height is set inline by JS for smooth animation */ }
-
-    .slots{
-      display:grid;gap:.75rem;padding:1rem; background:#fff;
-      grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-    }
+    .panel{height:0; overflow:hidden; transform:translateZ(0); transition:height .45s var(--t-fast)}
+    .slots{display:grid;gap:.75rem;padding:1rem; background:#fff;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
     .slot{
       background:#111;color:#fff;border:2px solid transparent;border-radius:10px;
       padding:.9rem 1rem;font-weight:900;letter-spacing:.6px;text-transform:uppercase;
       display:flex;align-items:center;justify-content:center;gap:.5rem;
       transition:transform .25s var(--t-fast), background .25s var(--t-fast), box-shadow .25s var(--t-fast);
-      box-shadow:0 8px 18px rgba(0,0,0,.12);
+      box-shadow:0 8px 18px rgba(0,0,0,.12)
     }
     .slot:hover{background:var(--red); transform:translateY(-3px); box-shadow:0 14px 34px rgba(196,30,58,.28)}
     .slot:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
@@ -135,37 +117,40 @@
     .modal.show{display:flex;animation:fadeIn .32s var(--t-fast)}
     .overlay{position:absolute;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(4px);animation:overlayIn .32s var(--t-fast)}
     .dialog{
-      position:relative;width:min(1400px,96%);height:min(92vh,1000px);background:#fff;border:3px solid var(--gold);
+      position:relative;background:#fff;border:3px solid var(--gold);
       border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;
       animation:dialogIn .38s var(--t-fast);
     }
+    /* Auto-ajuste al ancho típico del form */
+    .dialog.auto-fit{max-width:min(820px,98vw);width:auto}
     .dialog-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:#111;color:#fff;padding:1rem 1.25rem;border-bottom:3px solid var(--gold)}
     .dialog-title{font-weight:900;letter-spacing:.5px}
     .close{background:transparent;color:#fff;width:44px;height:44px;border:2px solid #3f3f46;border-radius:10px;display:grid;place-items:center;font-size:1.6rem;line-height:1;transition:.2s var(--t-fast)}
     .close:hover{background:var(--red);border-color:var(--red)}
-    .frame-wrap{position:relative;flex:1}
-    .frame-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .frame-wrap{position:relative;flex:1;display:flex;align-items:stretch;justify-content:center;padding:0}
+    #formFrame{width:100%;max-width:760px;min-width:360px;height:80vh;border:0;background:#f3f4f6}
+    @media (max-width:640px){
+      .dialog.auto-fit{width:100%;height:100vh;border-radius:0;border-width:0;max-width:100%}
+      #formFrame{width:100%;max-width:100%;height:100%}
+      .header-inner{flex-direction:column;align-items:flex-start}
+    }
+
+    /* Marca dentro del modal */
+    .brand-modal{display:flex;align-items:center;gap:.85rem}
+    .brand-modal__logo{height:42px;width:auto;filter:drop-shadow(0 4px 10px rgba(212,165,116,.35))}
+    .brand-modal__text{display:flex;flex-direction:column;line-height:1}
+    .brand-modal__name{font-weight:900;letter-spacing:.8px;color:#fff}
+    .brand-modal__tag{font-weight:700;font-size:.8rem;color:#d1d5db}
 
     /* Footer */
     footer{background:#111;color:#cbd5e1;border-top:3px solid var(--gold);padding:1.2rem 0}
     .foot{display:flex;align-items:center;justify-content:space-between;gap:1rem}
     .foot small{color:#9ca3af}
 
-    /* Animations */
+    /* Keyframes */
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
     @keyframes overlayIn{from{opacity:0}to{opacity:1}}
     @keyframes dialogIn{from{opacity:0; transform:translateY(12px) scale(.98)} to{opacity:1; transform:translateY(0) scale(1)}}
-
-    /* Responsive tweaks */
-    @media (max-width:820px){
-      .brand img{width:88px;height:88px}
-      .slots{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
-    }
-    @media (max-width:640px){
-      .dialog{width:100%;height:100vh;border-radius:0;border-width:0}
-      .modal{padding:0}
-      .header-inner{flex-direction:column;align-items:flex-start}
-    }
   </style>
 </head>
 <body>
@@ -348,14 +333,20 @@
     </section>
   </main>
 
-  <!-- Modal -->
+  <!-- Modal con marca -->
   <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
     <div class="overlay" data-close></div>
-    <div class="dialog" role="document">
-      <div class="dialog-header">
-        <div class="dialog-title" id="dialogTitle">Formulario</div>
+    <div class="dialog auto-fit" role="document">
+      <header class="dialog-header">
+        <div class="brand-modal">
+          <img src="images/logo.png" alt="Sparta Academy" class="brand-modal__logo" />
+          <div class="brand-modal__text">
+            <span class="brand-modal__name">SPARTA ACADEMY</span>
+            <span class="brand-modal__tag">Simuladores</span>
+          </div>
+        </div>
         <button class="close" data-close aria-label="Cerrar">&times;</button>
-      </div>
+      </header>
       <div class="frame-wrap">
         <iframe id="formFrame" title="Formulario Sparta Academy" referrerpolicy="no-referrer-when-downgrade" loading="lazy"></iframe>
       </div>
@@ -404,12 +395,21 @@
     const closeEls = modal.querySelectorAll('[data-close]');
     let lastTrigger = null;
 
-    function openModal(url, trigger){
+    // Anchos sugeridos por form (si alguno renderiza más estrecho o ancho que el estándar)
+    const FORM_WIDTH_HINT = {
+      // 'i3': 720, // ejemplo
+    };
+    function setFrameWidthHint(key){
+      frame.style.maxWidth = (FORM_WIDTH_HINT[key] || 760) + 'px';
+    }
+
+    function openModal(url, trigger, key){
       lastTrigger = trigger;
+      setFrameWidthHint(key);
       frame.src = url;
       modal.classList.add('show');
       document.body.style.overflow='hidden';
-      // Focus trap básico
+      // Focus trap
       const focusables = modal.querySelectorAll('button,[href],iframe,[tabindex]:not([tabindex="-1"])');
       const first = focusables[0], last = focusables[focusables.length-1];
       first.focus();
@@ -437,31 +437,28 @@
       btn.addEventListener('click', ()=>{
         const key = btn.getAttribute('data-test');
         const url = FORM_URLS[key];
-        if(url) openModal(url, btn);
+        if(url) openModal(url, btn, key);
       });
     });
 
-    // Acordeones con animación de altura
+    // Acordeones con animación de altura y exclusividad
     document.querySelectorAll('[data-acc]').forEach(acc=>{
       const btn = acc.querySelector('.header-btn');
       const panel = acc.querySelector('.panel');
       btn.addEventListener('click', ()=>{
         const expanded = btn.getAttribute('aria-expanded') === 'true';
-        // cerrar si está abierto
         if(expanded){
           btn.setAttribute('aria-expanded','false');
-          panel.style.height = panel.scrollHeight + 'px'; // fijar para animar
+          panel.style.height = panel.scrollHeight + 'px';
           requestAnimationFrame(()=>{ panel.style.height = '0px'; panel.classList.remove('open'); });
           return;
         }
-        // cerrar otros abiertos (acordeón exclusivo)
         document.querySelectorAll('[data-acc] .header-btn[aria-expanded="true"]').forEach(openBtn=>{
           openBtn.setAttribute('aria-expanded','false');
           const p = openBtn.closest('[data-acc]').querySelector('.panel');
           p.style.height = p.scrollHeight + 'px';
           requestAnimationFrame(()=>{ p.style.height = '0px'; p.classList.remove('open'); });
         });
-        // abrir actual
         btn.setAttribute('aria-expanded','true');
         panel.classList.add('open');
         panel.style.height = 'auto';
