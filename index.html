@@ -8,10 +8,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/styles.css" />
+
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <!-- Header -->
   <header>
     <div class="container">
       <div class="header-inner">
@@ -22,16 +22,15 @@
             <div class="brand-sub">Excelencia en Preparación Académica</div>
           </div>
         </div>
-        <span class="chip">Proceso 2025</span>
+        <span class="chip">Proceso 2024</span>
       </div>
     </div>
   </header>
 
-  <!-- Hero -->
   <section class="hero">
     <div class="container hero-inner">
       <h1>Simuladores de Pruebas Académicas</h1>
-      <p>GRATUITOS</p>
+      <p>Reclutamiento Policía Nacional del Ecuador</p>
       <div class="hero-badges">
         <span class="chip">Acceso ilimitado</span>
         <span class="chip">Práctica constante</span>
@@ -40,11 +39,9 @@
     </div>
   </section>
 
-  <!-- Catálogo con acordeones -->
   <main class="container">
     <section class="grid">
 
-      <!-- ESTUDIOS SOCIALES -->
       <article class="accordion" data-acc>
         <button class="header-btn" aria-expanded="false">
           <div class="title-wrap">
@@ -72,13 +69,12 @@
         </div>
       </article>
 
-      <!-- INGLÉS -->
       <article class="accordion" data-acc>
         <button class="header-btn" aria-expanded="false">
           <div class="title-wrap">
             <div class="icon-box" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                ircle cx="12" cy="12" r r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
               </svg>
             </div>
             <div>
@@ -100,7 +96,6 @@
         </div>
       </article>
 
-      <!-- LENGUA Y LITERATURA -->
       <article class="accordion" data-acc>
         <button class="header-btn" aria-expanded="false">
           <div class="title-wrap">
@@ -128,7 +123,6 @@
         </div>
       </article>
 
-      <!-- MATEMÁTICAS -->
       <article class="accordion" data-acc>
         <button class="header-btn" aria-expanded="false">
           <div class="title-wrap">
@@ -156,7 +150,6 @@
         </div>
       </article>
 
-      <!-- PERSONALIDAD -->
       <article class="accordion" data-acc>
         <button class="header-btn" aria-expanded="false">
           <div class="title-wrap">
@@ -190,34 +183,26 @@
     </section>
   </main>
 
-  <!-- Modal -->
   <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
     <div class="overlay" data-close></div>
-    <div class="dialog full-fit" role="document">
-      <header class="dialog-header">
-        <div class="brand-modal">
-          <img src="images/logo.png" alt="Sparta Academy" class="brand-modal__logo" />
-          <div class="brand-modal__text">
-            <span class="brand-modal__name">SPARTA ACADEMY</span>
-            <span class="brand-modal__tag">Simuladores</span>
-          </div>
-        </div>
+    <div class="dialog" role="document">
+      <div class="dialog-header">
+        <div class="dialog-title" id="dialogTitle">Formulario</div>
         <button class="close" data-close aria-label="Cerrar">&times;</button>
-      </header>
+      </div>
       <div class="frame-wrap">
         <iframe id="formFrame" title="Formulario Sparta Academy" referrerpolicy="no-referrer-when-downgrade" loading="lazy"></iframe>
       </div>
     </div>
   </div>
 
-  <!-- Footer -->
   <footer>
     <div class="container foot">
-      <div>&copy; 2025 Sparta Academy</div>
-      <small></small>
+      <div>&copy; 2024 Sparta Academy</div>
+      <small>La función de guardar está inhabilitada</small>
     </div>
   </footer>
 
-  <script src="assets/app.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
