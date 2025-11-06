@@ -126,8 +126,43 @@ header{
   border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;
   animation:dialogIn .38s var(--t-fast);
 }
-.dialog-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:#111;color:#fff;padding:1rem 1.25rem;border-bottom:3px solid var(--gold)}
-.dialog-title{font-weight:900;letter-spacing:.5px}
+.dialog-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  background:#111;
+  color:#fff;
+  padding:0.75rem 1.25rem; /* Ajustado el padding para el logo */
+  border-bottom:3px solid var(--gold);
+}
+
+/* Nuevos estilos para el encabezado del modal con logo */
+.dialog-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem; /* Espacio entre el logo y el título */
+}
+
+.modal-logo {
+  width: 55px; /* Tamaño del logo en el modal */
+  height: 55px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(196,30,58,.15)); /* Sombra sutil como el logo del header */
+  transition: transform .3s var(--t-fast);
+}
+
+.modal-logo:hover {
+    transform: scale(1.05); /* Pequeña interacción al pasar el ratón */
+}
+
+.dialog-title{
+  font-weight:900;
+  letter-spacing:.5px;
+  font-size: 1.6rem; /* Ajustado el tamaño del título */
+  color: var(--gold); /* Un toque dorado para el título del modal */
+}
+
 .close{background:transparent;color:#fff;width:44px;height:44px;border:2px solid #3f3f46;border-radius:10px;display:grid;place-items:center;font-size:1.6rem;line-height:1;transition:.2s var(--t-fast)}
 .close:hover{background:var(--red);border-color:var(--red)}
 .frame-wrap{position:relative;flex:1}
