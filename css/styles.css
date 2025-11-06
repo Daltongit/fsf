@@ -1,14 +1,14 @@
 /* ==========================================
-   VARIABLES - COLORES EXACTOS DEL LOGO
+   VARIABLES - COLORES SÓLIDOS DEL LOGO
    ========================================== */
 :root {
-    /* Colores EXACTOS extraídos del logo de Sparta Academy */
-    --gold-primary: #D4A574;      /* Dorado principal del logo */
+    /* Colores EXACTOS del logo - SIN DEGRADADOS */
+    --gold-primary: #D4A574;      /* Dorado del logo */
     --gold-light: #E0B889;        /* Dorado claro */
     --gold-dark: #B8935E;         /* Dorado oscuro */
-    --red-primary: #C41E3A;       /* Rojo principal del logo */
+    --red-primary: #C41E3A;       /* Rojo principal */
     --red-dark: #8F1529;          /* Rojo oscuro */
-    --red-light: #D9304B;         /* Rojo claro */
+    --red-light: #E85D73;         /* Rojo claro para hover */
     
     /* Neutrales */
     --white: #FFFFFF;
@@ -25,7 +25,7 @@
     --font-primary: 'Poppins', sans-serif;
     --font-secondary: 'Montserrat', sans-serif;
     
-    /* Espaciado fluido y responsive */
+    /* Espaciado fluido */
     --space-xs: clamp(0.25rem, 0.5vw, 0.5rem);
     --space-sm: clamp(0.5rem, 1vw, 1rem);
     --space-md: clamp(0.75rem, 1.5vw, 1.5rem);
@@ -39,11 +39,6 @@
     --shadow-red: 0 10px 30px rgba(196, 30, 58, 0.2);
     --shadow-card: 0 5px 20px rgba(0, 0, 0, 0.08);
     --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.12);
-    
-    /* Gradientes con colores exactos del logo */
-    --gradient-gold: linear-gradient(135deg, #D4A574 0%, #E0B889 100%);
-    --gradient-red: linear-gradient(135deg, #C41E3A 0%, #D9304B 100%);
-    --gradient-hero: linear-gradient(135deg, #C41E3A 0%, #D4A574 100%);
     
     /* Transiciones */
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -87,7 +82,7 @@ button {
 }
 
 /* ==========================================
-   CONTAINER RESPONSIVE
+   CONTAINER
    ========================================== */
 .container {
     width: 100%;
@@ -97,7 +92,7 @@ button {
 }
 
 /* ==========================================
-   HEADER - TOTALMENTE RESPONSIVE
+   HEADER - COLOR SÓLIDO
    ========================================== */
 .header {
     background: var(--white);
@@ -115,7 +110,7 @@ button {
     left: 0;
     right: 0;
     height: 4px;
-    background: var(--gradient-hero);
+    background: var(--red-primary);
 }
 
 .header-content {
@@ -139,7 +134,7 @@ button {
 }
 
 .logo:hover {
-    transform: scale(1.08) rotate(2deg);
+    transform: scale(1.08);
 }
 
 .brand-info {
@@ -152,10 +147,7 @@ button {
     font-family: var(--font-secondary);
     font-size: clamp(1.2rem, 3vw, 2rem);
     font-weight: 900;
-    background: var(--gradient-hero);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--red-primary);
     letter-spacing: 1px;
     line-height: 1.2;
 }
@@ -168,10 +160,10 @@ button {
 }
 
 /* ==========================================
-   HERO - RESPONSIVE
+   HERO - COLOR SÓLIDO SIN DEGRADADO
    ========================================== */
 .hero {
-    background: var(--gradient-hero);
+    background: var(--red-primary);
     padding: var(--space-3xl) 0;
     position: relative;
     overflow: hidden;
@@ -227,7 +219,7 @@ button {
 }
 
 .hero-title .highlight {
-    color: var(--gold-light);
+    color: var(--gold-primary);
 }
 
 .hero-subtitle {
@@ -277,7 +269,7 @@ button {
 }
 
 /* ==========================================
-   SUBJECT CARDS - RESPONSIVE
+   SUBJECT CARDS - COLOR SÓLIDO
    ========================================== */
 .subject-card {
     background: var(--white);
@@ -310,7 +302,7 @@ button {
     left: 0;
     right: 0;
     height: 6px;
-    background: var(--gradient-hero);
+    background: var(--red-primary);
 }
 
 .card-header {
@@ -318,7 +310,7 @@ button {
     display: flex;
     align-items: center;
     gap: var(--space-lg);
-    background: linear-gradient(to bottom, var(--cream), var(--white));
+    background: var(--white);
     border-bottom: 2px solid var(--off-white);
     flex-wrap: wrap;
 }
@@ -326,7 +318,7 @@ button {
 .card-icon {
     width: clamp(60px, 10vw, 80px);
     height: clamp(60px, 10vw, 80px);
-    background: var(--gradient-gold);
+    background: var(--gold-primary);
     border-radius: 16px;
     display: flex;
     align-items: center;
@@ -377,7 +369,7 @@ button {
 }
 
 .status-badge.available {
-    background: var(--gradient-gold);
+    background: var(--gold-primary);
     color: var(--white);
     box-shadow: var(--shadow-gold);
 }
@@ -395,7 +387,7 @@ button {
 }
 
 /* ==========================================
-   TESTS GRID - RESPONSIVE
+   TESTS GRID
    ========================================== */
 .tests-grid {
     display: grid;
@@ -404,7 +396,7 @@ button {
 }
 
 .test-card {
-    background: linear-gradient(135deg, var(--white) 0%, var(--off-white) 100%);
+    background: var(--white);
     border: 2px solid var(--gray-lighter);
     border-radius: 16px;
     padding: var(--space-lg);
@@ -424,7 +416,7 @@ button {
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--gradient-red);
+    background: var(--red-primary);
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: 0;
@@ -458,7 +450,7 @@ button {
 .test-badge {
     width: clamp(50px, 10vw, 60px);
     height: clamp(50px, 10vw, 60px);
-    background: var(--gradient-gold);
+    background: var(--gold-primary);
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -542,7 +534,7 @@ button {
 }
 
 /* ==========================================
-   MODAL - RESPONSIVE
+   MODAL - COLOR SÓLIDO
    ========================================== */
 .modal {
     position: fixed;
@@ -598,7 +590,7 @@ button {
 }
 
 .modal-header {
-    background: var(--gradient-hero);
+    background: var(--red-primary);
     padding: var(--space-md) var(--space-lg);
     display: flex;
     justify-content: space-between;
@@ -665,7 +657,7 @@ button {
 }
 
 /* ==========================================
-   FOOTER - RESPONSIVE
+   FOOTER
    ========================================== */
 .footer {
     background: var(--gray-dark);
@@ -705,10 +697,8 @@ button {
 }
 
 /* ==========================================
-   BREAKPOINTS ESPECÍFICOS
+   RESPONSIVE
    ========================================== */
-
-/* Tablets en Portrait (601px - 768px) */
 @media (max-width: 768px) {
     .hero-features {
         gap: var(--space-md);
@@ -729,7 +719,6 @@ button {
     }
 }
 
-/* Mobile en Landscape y Tablets pequeñas (481px - 600px) */
 @media (max-width: 600px) {
     .tests-grid {
         grid-template-columns: 1fr;
@@ -740,7 +729,6 @@ button {
     }
 }
 
-/* Mobile en Portrait (320px - 480px) */
 @media (max-width: 480px) {
     .container {
         padding: 0 var(--space-md);
@@ -774,13 +762,8 @@ button {
         flex-direction: column;
         text-align: center;
     }
-    
-    .footer-info {
-        text-align: center;
-    }
 }
 
-/* Extra Small Mobile (320px) */
 @media (max-width: 360px) {
     html {
         font-size: 14px;
@@ -792,16 +775,12 @@ button {
     }
 }
 
-/* Desktop Grande (1441px+) */
 @media (min-width: 1441px) {
     .container {
         max-width: 1400px;
     }
 }
 
-/* ==========================================
-   MEJORAS DE ACCESIBILIDAD
-   ========================================== */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -812,7 +791,6 @@ button {
     }
 }
 
-/* Soporte para touch devices */
 @media (hover: none) and (pointer: coarse) {
     .test-card:active {
         transform: scale(0.98);
@@ -823,16 +801,6 @@ button {
     }
 }
 
-/* ==========================================
-   OPTIMIZACIONES DE RENDIMIENTO
-   ========================================== */
-@media (min-width: 769px) {
-    .hero-bg-pattern {
-        will-change: transform;
-    }
-}
-
-/* Print styles */
 @media print {
     .header,
     .footer,
