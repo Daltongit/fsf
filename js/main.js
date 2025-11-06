@@ -6,12 +6,14 @@ const TESTS = {
     'sociales-p4': 'https://docs.google.com/forms/d/e/1FAIpQLSdB1sn_uvqWpl6GOj9NRw5pZkDhZfeFNKvp8bLBzAQx8I0EOA/viewform?usp=header'
 };
 
+// Elementos
 const modal = document.getElementById('testModal');
 const closeBtn = document.getElementById('closeModal');
 const testFrame = document.getElementById('testFrame');
-const testButtons = document.querySelectorAll('.test-card');
+const testCards = document.querySelectorAll('.test-card');
 const modalOverlay = document.querySelector('.modal-overlay');
 
+// Abrir modal
 function openModal(testId) {
     const url = TESTS[testId];
     if (!url) return;
@@ -21,15 +23,17 @@ function openModal(testId) {
     document.body.style.overflow = 'hidden';
 }
 
+// Cerrar modal
 function closeModal() {
     modal.classList.remove('active');
     document.body.style.overflow = '';
     setTimeout(() => testFrame.src = '', 300);
 }
 
-testButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const testId = btn.getAttribute('data-test');
+// Event listeners
+testCards.forEach(card => {
+    card.addEventListener('click', () => {
+        const testId = card.getAttribute('data-test');
         openModal(testId);
     });
 });
@@ -43,4 +47,4 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-console.log('✓ Sparta Academy - Sistema cargado');
+console.log('✓ Sparta Academy cargado correctamente');
