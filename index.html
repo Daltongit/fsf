@@ -1,89 +1,315 @@
-<section class="catalog">
-  <!-- ESTUDIOS SOCIALES -->
-  <div class="category">
-    <div class="category-header">
-      <h3>Estudios Sociales</h3>
-      <span class="badge">4 pruebas</span>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sparta Academy | Simuladores Académicos</title>
+
+  <!-- Performance: Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --gold:#D4A574;
+      --gold-600:#B8935E;
+      --red:#C41E3A;
+      --bg:#FAFAFA;
+      --fg:#171717;
+      --muted:#6B7280;
+      --line:#E5E7EB;
+      --card:#FFFFFF;
+      --radius:12px;
+
+      --shadow-sm:0 1px 2px rgba(0,0,0,.05);
+      --shadow:0 4px 10px rgba(0,0,0,.08);
+      --shadow-lg:0 18px 48px rgba(0,0,0,.12);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;
+      background:var(--bg);
+      color:var(--fg);
+      line-height:1.6;
+    }
+    img{display:block;max-width:100%;height:auto}
+
+    .container{max-width:1280px;margin:0 auto;padding:0 1.25rem}
+
+    /* Header */
+    header{
+      background:#fff;border-bottom:1px solid var(--line);box-shadow:var(--shadow-sm);
+      position:sticky;top:0;z-index:50;
+    }
+    .header-inner{
+      display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 0;
+    }
+    .brand{display:flex;align-items:center;gap:1rem}
+    .brand img{width:110px;height:110px;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(196,30,58,.18))}
+    .brand-title{font-weight:900;letter-spacing:-.3px;font-size:1.5rem}
+    .brand-sub{color:var(--muted);font-weight:600;font-size:.95rem}
+
+    /* Hero */
+    .hero{background:#111; color:#fff; padding:3rem 0; border-bottom:3px solid var(--gold)}
+    .hero h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;letter-spacing:-.5px;margin-bottom:.35rem}
+    .hero p{color:#d1d5db}
+    .hero-badges{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem}
+    .badge{background:var(--gold);color:#fff;border-radius:999px;padding:.35rem .8rem;font-weight:800;font-size:.8rem}
+
+    /* Catalog */
+    .catalog{display:grid;gap:1.25rem;padding:2rem 0}
+    .category{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+    .category-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;background:#F9FAFB;border-bottom:1px solid var(--line)}
+    .category-header h3{font-size:1rem;letter-spacing:.4px;font-weight:900}
+    .count{background:#111;color:#fff;border-radius:6px;padding:.35rem .6rem;font-size:.78rem;font-weight:800}
+
+    .category-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.75rem;padding:1rem}
+    .test-btn{
+      background:#111;color:#fff;border:2px solid transparent;border-radius:10px;
+      padding:.9rem 1rem;font-weight:900;letter-spacing:.6px;text-transform:uppercase;
+      display:flex;align-items:center;justify-content:center;gap:.5rem;transition:.25s;box-shadow:var(--shadow-sm)
+    }
+    .test-btn:hover{background:var(--red);transform:translateY(-2px)}
+    .test-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+    /* Footer */
+    footer{background:#111;color:#cbd5e1;border-top:3px solid var(--gold);padding:1.5rem 0;margin-top:1rem}
+    .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .foot-note{color:#9CA3AF;font-size:.9rem}
+
+    /* Modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:1000;padding:1rem}
+    .modal.open{display:flex}
+    .overlay{position:absolute;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(4px)}
+    .dialog{
+      position:relative;width:min(1400px,96%);height:min(92vh,1000px);
+      background:#fff;border:3px solid var(--gold);border-radius:14px;overflow:hidden;
+      display:flex;flex-direction:column;box-shadow:var(--shadow-lg)
+    }
+    .dialog-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:#111;color:#fff;padding:1rem 1.25rem;border-bottom:3px solid var(--gold)}
+    .dialog-title{font-weight:900;letter-spacing:.5px}
+    .close{background:transparent;color:#fff;width:44px;height:44px;border:2px solid #3f3f46;border-radius:8px;display:grid;place-items:center;font-size:1.6rem;line-height:1;transition:.2s}
+    .close:hover{background:var(--red);border-color:var(--red)}
+    .frame-wrap{position:relative;flex:1}
+    .frame-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+    /* Responsive */
+    @media (max-width:768px){
+      .brand img{width:84px;height:84px}
+      .footer-inner{flex-direction:column;text-align:center}
+    }
+    @media (max-width:640px){
+      .dialog{width:100%;height:100vh;border-radius:0;border-width:0}
+      .modal{padding:0}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <div class="brand">
+          <img src="images/logo.png" alt="Sparta Academy">
+          <div>
+            <div class="brand-title">SPARTA ACADEMY</div>
+            <div class="brand-sub">Excelencia en Preparación Académica</div>
+          </div>
+        </div>
+        <div class="badge">Proceso 2024</div>
+      </div>
     </div>
-    <div class="category-grid">
-      <button class="test-link" data-test="es1">ES1</button>
-      <button class="test-link" data-test="es2">ES2</button>
-      <button class="test-link" data-test="es3">ES3</button>
-      <button class="test-link" data-test="es4">ES4</button>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Simuladores de Pruebas Académicas</h1>
+      <p>Reclutamiento Policía Nacional del Ecuador</p>
+      <div class="hero-badges">
+        <span class="badge">Acceso ilimitado</span>
+        <span class="badge">Práctica constante</span>
+        <span class="badge">100% Gratuito</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <section class="catalog">
+
+      <!-- ESTUDIOS SOCIALES -->
+      <div class="category">
+        <div class="category-header">
+          <h3>Estudios Sociales</h3>
+          <span class="count">4 pruebas</span>
+        </div>
+        <div class="category-grid">
+          <button class="test-btn" data-test="es1">ES1</button>
+          <button class="test-btn" data-test="es2">ES2</button>
+          <button class="test-btn" data-test="es3">ES3</button>
+          <button class="test-btn" data-test="es4">ES4</button>
+        </div>
+      </div>
+
+      <!-- INGLÉS -->
+      <div class="category">
+        <div class="category-header">
+          <h3>Inglés</h3>
+          <span class="count">4 pruebas</span>
+        </div>
+        <div class="category-grid">
+          <button class="test-btn" data-test="i1">I1</button>
+          <button class="test-btn" data-test="i2">I2</button>
+          <button class="test-btn" data-test="i3">I3</button>
+          <button class="test-btn" data-test="i4">I4</button>
+        </div>
+      </div>
+
+      <!-- LENGUA Y LITERATURA -->
+      <div class="category">
+        <div class="category-header">
+          <h3>Lengua y Literatura</h3>
+          <span class="count">4 pruebas</span>
+        </div>
+        <div class="category-grid">
+          <button class="test-btn" data-test="l1">L1</button>
+          <button class="test-btn" data-test="l2">L2</button>
+          <button class="test-btn" data-test="l3">L3</button>
+          <button class="test-btn" data-test="l4">L4</button>
+        </div>
+      </div>
+
+      <!-- MATEMÁTICAS -->
+      <div class="category">
+        <div class="category-header">
+          <h3>Matemáticas</h3>
+          <span class="count">4 pruebas</span>
+        </div>
+        <div class="category-grid">
+          <button class="test-btn" data-test="m1">M1</button>
+          <button class="test-btn" data-test="m2">M2</button>
+          <button class="test-btn" data-test="m3">M3</button>
+          <button class="test-btn" data-test="m4">M4</button>
+        </div>
+      </div>
+
+      <!-- PERSONALIDAD -->
+      <div class="category">
+        <div class="category-header">
+          <h3>Personalidad</h3>
+          <span class="count">7 pruebas</span>
+        </div>
+        <div class="category-grid">
+          <button class="test-btn" data-test="p1">P1</button>
+          <button class="test-btn" data-test="p2">P2</button>
+          <button class="test-btn" data-test="p3">P3</button>
+          <button class="test-btn" data-test="p4">P4</button>
+          <button class="test-btn" data-test="p5">P5</button>
+          <button class="test-btn" data-test="p6">P6</button>
+          <button class="test-btn" data-test="p7">P7</button>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Modal accesible -->
+  <div id="formModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+    <div class="overlay" data-close></div>
+    <div class="dialog" role="document">
+      <div class="dialog-header">
+        <div class="dialog-title" id="dialogTitle">Formulario</div>
+        <button class="close" data-close aria-label="Cerrar">&times;</button>
+      </div>
+      <div class="frame-wrap">
+        <iframe id="formFrame" title="Formulario Sparta Academy" referrerpolicy="no-referrer-when-downgrade" loading="lazy"></iframe>
+      </div>
     </div>
   </div>
 
-  <!-- INGLÉS -->
-  <div class="category">
-    <div class="category-header">
-      <h3>Inglés</h3>
-      <span class="badge">4 pruebas</span>
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>&copy; 2024 Sparta Academy</div>
+        <div class="foot-note">La función de guardar está inhabilitada</div>
+      </div>
     </div>
-    <div class="category-grid">
-      <button class="test-link" data-test="i1">I1</button>
-      <button class="test-link" data-test="i2">I2</button>
-      <button class="test-link" data-test="i3">I3</button>
-      <button class="test-link" data-test="i4">I4</button>
-    </div>
-  </div>
+  </footer>
 
-  <!-- LENGUA Y LITERATURA -->
-  <div class="category">
-    <div class="category-header">
-      <h3>Lengua y Literatura</h3>
-      <span class="badge">4 pruebas</span>
-    </div>
-    <div class="category-grid">
-      <button class="test-link" data-test="l1">L1</button>
-      <button class="test-link" data-test="l2">L2</button>
-      <button class="test-link" data-test="l3">L3</button>
-      <button class="test-link" data-test="l4">L4</button>
-    </div>
-  </div>
+  <script>
+    // Mapa de URLs
+    const FORM_URLS = {
+      es1:"https://docs.google.com/forms/d/e/1FAIpQLSeCBdHUIledYtSLNmpkxq3MHQF6h8bYOG9ZSGfT6cdEFbVwVA/viewform?usp=header",
+      es2:"https://docs.google.com/forms/d/e/1FAIpQLSfCzx3jeM2WJuBFyY3XAvF-Viim0h9G6HP1LDGbcqjOSMMhXw/viewform?usp=header",
+      es3:"https://docs.google.com/forms/d/e/1FAIpQLSflGSidgSZJcrJYWTQNKbctFpVfzS3qVSlcjm9NS_2sRPORQQ/viewform?usp=header",
+      es4:"https://docs.google.com/forms/d/e/1FAIpQLSfuA8SGSYIsWMt4EXqMiMpjpUvcb46Ox51-y9QUASH6I_xA0A/viewform?usp=header",
+      i1:"https://docs.google.com/forms/d/e/1FAIpQLSe6jzmwWf7z6r1iKkrqsJpkKTqNlvmjzMEsKOIyCIHD1fdSTg/viewform?usp=header",
+      i2:"https://docs.google.com/forms/d/e/1FAIpQLSdygMifXyF3wZ-He_X8plCIKJU8eKmU7FG6b10HbjNmBnDuYQ/viewform?usp=header",
+      i3:"https://docs.google.com/forms/d/e/1FAIpQLSdJKRkm_jNDUxr3F2yjuODOuQBeSgPEx0B7HsS1lbRdJqz-tg/viewform?usp=header",
+      i4:"https://docs.google.com/forms/d/e/1FAIpQLSffIHyMblXI4Yp9xp6NoSdp9HG2z1q7WHm48gabBTBZRnXrrw/viewform?usp=header",
+      l1:"https://docs.google.com/forms/d/e/1FAIpQLSeo4O-7omTSS6hIuWbHo_RCJPTkP3xZYo05Vm1KO89InTPJtQ/viewform?usp=header",
+      l2:"https://docs.google.com/forms/d/e/1FAIpQLSc97pVjlQ9vUl3WHR3Go9lfQnawY3uI0_1_Hsdid_S7K9kxaw/viewform?usp=header",
+      l3:"https://docs.google.com/forms/d/e/1FAIpQLSegJM1kPxfHSHTcIq6-0fN0mnV65B4cOd451p_UGI4basM54g/viewform?usp=header",
+      l4:"https://docs.google.com/forms/d/e/1FAIpQLSduJY-jkte7npVrCMZiVGoHENNGJa_-RKBlS81NBy53SsaGGw/viewform?usp=header",
+      m1:"https://docs.google.com/forms/d/e/1FAIpQLSffkgk_xgKKYteMgw-6aSwoJut1mXF9Zn_2kcxEsYX5HN8exg/viewform?usp=header",
+      m2:"https://docs.google.com/forms/d/e/1FAIpQLSfwBsaCAUsLVtmNfIm6SLewmG-1KAJwMDFBSjfGZEpdqXo2gg/viewform?usp=header",
+      m3:"https://docs.google.com/forms/d/e/1FAIpQLSfMUzEcHGcgdwjEVxKrKTkpBxfPUaWnO5zZA3_zBdxMdVI7Yw/viewform?usp=header",
+      m4:"https://docs.google.com/forms/d/e/1FAIpQLSfjky0r3wYebeoNlYqE81vBY4FlmKWN9mD8yZ5bVtXE_oR1jA/viewform?usp=header",
+      p1:"https://docs.google.com/forms/d/e/1FAIpQLScKtQOF_tJ8JCWJrrVI5xTqs9xSvMhiGHIT1MK7AMtIrlnl6Q/viewform?usp=header",
+      p2:"https://docs.google.com/forms/d/e/1FAIpQLSeADNP2ISB0J4IGz92GpELqN0NXC7vAUKZps-cipgV5seEiTQ/viewform?usp=header",
+      p3:"https://docs.google.com/forms/d/e/1FAIpQLScGqZ4cdszEQLta8ZbFe-H93vLloSeaKz0M-w4jUoQnJXS6eA/viewform?usp=header",
+      p4:"https://docs.google.com/forms/d/e/1FAIpQLSfqFEnDXO3RND16J0gbkSxvot1IcBjc5cE9IsGKtxqgs5Nb-w/viewform?usp=header",
+      p5:"https://docs.google.com/forms/d/e/1FAIpQLScoDzv2xrlKaNcflOSjcsj47EppNgLF-ztM6oJLXMulwkf1EQ/viewform?usp=header",
+      p6:"https://docs.google.com/forms/d/e/1FAIpQLSdWbpIfWK2sHtfmu-cjqgLusgax5Xb40lcOpAWSvbMgSQu81Q/viewform?usp=header",
+      p7:"https://docs.google.com/forms/d/e/1FAIpQLSdk3Jdid-LbWV7rnzD54GF_Pwn7r9b7xHD9ftk1Kd5o2p6ILg/viewform?usp=header"
+    };
 
-  <!-- MATEMÁTICAS -->
-  <div class="category">
-    <div class="category-header">
-      <h3>Matemáticas</h3>
-      <span class="badge">4 pruebas</span>
-    </div>
-    <div class="category-grid">
-      <button class="test-link" data-test="m1">M1</button>
-      <button class="test-link" data-test="m2">M2</button>
-      <button class="test-link" data-test="m3">M3</button>
-      <button class="test-link" data-test="m4">M4</button>
-    </div>
-  </div>
+    const modal = document.getElementById('formModal');
+    const frame = document.getElementById('formFrame');
+    const triggers = document.querySelectorAll('.test-btn');
+    const closers = modal.querySelectorAll('[data-close]');
+    let lastTrigger = null;
 
-  <!-- PERSONALIDAD -->
-  <div class="category">
-    <div class="category-header">
-      <h3>Personalidad</h3>
-      <span class="badge">7 pruebas</span>
-    </div>
-    <div class="category-grid">
-      <button class="test-link" data-test="p1">P1</button>
-      <button class="test-link" data-test="p2">P2</button>
-      <button class="test-link" data-test="p3">P3</button>
-      <button class="test-link" data-test="p4">P4</button>
-      <button class="test-link" data-test="p5">P5</button>
-      <button class="test-link" data-test="p6">P6</button>
-      <button class="test-link" data-test="p7">P7</button>
-    </div>
-  </div>
-</section>
+    function openModal(url, trigger){
+      lastTrigger = trigger;
+      frame.src = url;
+      modal.classList.add('open');
+      // Focus trap básico
+      const focusables = modal.querySelectorAll('button,[href],iframe,[tabindex]:not([tabindex="-1"])');
+      const first = focusables[0], last = focusables[focusables.length-1];
+      first.focus();
+      modal.onkeydown = (e)=>{
+        if(e.key === 'Tab'){
+          if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+          else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+        }
+        if(e.key === 'Escape'){ closeModal(); }
+      };
+      document.body.style.overflow='hidden';
+    }
 
-<!-- Modal accesible -->
-<div id="formModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
-  <div class="overlay" data-close></div>
-  <div class="dialog" role="document">
-    <header class="dialog-header">
-      <h4 id="modalTitle">Formulario</h4>
-      <p id="modalDesc" class="sr-only">Ventana modal con el formulario seleccionado</p>
-      <button class="close-btn" data-close aria-label="Cerrar">&times;</button>
-    </header>
-    <div class="iframe-wrap">
-      <iframe id="formFrame" title="Formulario Sparta Academy" referrerpolicy="no-referrer-when-downgrade" loading="lazy"></iframe>
-    </div>
-  </div>
-</div>
+    function closeModal(){
+      modal.classList.remove('open');
+      frame.src = '';
+      modal.onkeydown = null;
+      document.body.style.overflow='';
+      if(lastTrigger) lastTrigger.focus();
+    }
+
+    triggers.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const key = btn.getAttribute('data-test');
+        const url = FORM_URLS[key];
+        if(url) openModal(url, btn);
+      });
+    });
+
+    closers.forEach(el=> el.addEventListener('click', closeModal));
+    // Cerrar con clic fuera del diálogo
+    modal.addEventListener('click', (e)=>{ if(e.target.classList.contains('overlay')) closeModal(); });
+    // Cerrar con ESC global
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
+  </script>
+</body>
+</html>
