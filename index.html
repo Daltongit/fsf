@@ -68,7 +68,7 @@
     .hero-badges{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}
     .hero-badges .chip{background:#1C1F26;border:1px solid #2a2f39;color:#e5e7eb;box-shadow:none}
 
-    /* Sección acordeones */
+    /* Acordeones */
     .grid{display:grid;gap:1.25rem;padding:2rem 0 2.5rem;grid-template-columns:1fr}
     .accordion{
       background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
@@ -121,33 +121,31 @@
       border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;
       animation:dialogIn .38s var(--t-fast);
     }
-    /* Auto-ajuste al ancho típico del form */
-    .dialog.auto-fit{max-width:min(820px,98vw);width:auto}
-    .dialog-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:#111;color:#fff;padding:1rem 1.25rem;border-bottom:3px solid var(--gold)}
-    .dialog-title{font-weight:900;letter-spacing:.5px}
+    .dialog.auto-fit{max-width:min(980px,98vw);width:auto} /* ancho más cómodo */
+    .dialog-header{display:flex;align-items:center;justify-content:space-between;gap:.75rem;background:#111;color:#fff;padding:.85rem 1rem;border-bottom:3px solid var(--gold)}
     .close{background:transparent;color:#fff;width:44px;height:44px;border:2px solid #3f3f46;border-radius:10px;display:grid;place-items:center;font-size:1.6rem;line-height:1;transition:.2s var(--t-fast)}
     .close:hover{background:var(--red);border-color:var(--red)}
     .frame-wrap{position:relative;flex:1;display:flex;align-items:stretch;justify-content:center;padding:0}
-    #formFrame{width:100%;max-width:760px;min-width:360px;height:80vh;border:0;background:#f3f4f6}
+    #formFrame{width:100%;max-width:900px;min-width:420px;height:82vh;border:0;background:#f3f4f6}
     @media (max-width:640px){
       .dialog.auto-fit{width:100%;height:100vh;border-radius:0;border-width:0;max-width:100%}
-      #formFrame{width:100%;max-width:100%;height:100%}
+      #formFrame{width:100%;max-width:100%;min-width:100%;height:100%}
       .header-inner{flex-direction:column;align-items:flex-start}
     }
 
-    /* Marca dentro del modal */
+    /* Marca en modal */
     .brand-modal{display:flex;align-items:center;gap:.85rem}
-    .brand-modal__logo{height:42px;width:auto;filter:drop-shadow(0 4px 10px rgba(212,165,116,.35))}
+    .brand-modal__logo{height:38px;width:auto;filter:drop-shadow(0 4px 10px rgba(212,165,116,.35))}
     .brand-modal__text{display:flex;flex-direction:column;line-height:1}
-    .brand-modal__name{font-weight:900;letter-spacing:.8px;color:#fff}
-    .brand-modal__tag{font-weight:700;font-size:.8rem;color:#d1d5db}
+    .brand-modal__name{font-weight:900;letter-spacing:.8px;color:#fff;font-size:.95rem}
+    .brand-modal__tag{font-weight:700;font-size:.75rem;color:#d1d5db}
 
     /* Footer */
     footer{background:#111;color:#cbd5e1;border-top:3px solid var(--gold);padding:1.2rem 0}
     .foot{display:flex;align-items:center;justify-content:space-between;gap:1rem}
     .foot small{color:#9ca3af}
 
-    /* Keyframes */
+    /* Animaciones */
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
     @keyframes overlayIn{from{opacity:0}to{opacity:1}}
     @keyframes dialogIn{from{opacity:0; transform:translateY(12px) scale(.98)} to{opacity:1; transform:translateY(0) scale(1)}}
@@ -395,12 +393,9 @@
     const closeEls = modal.querySelectorAll('[data-close]');
     let lastTrigger = null;
 
-    // Anchos sugeridos por form (si alguno renderiza más estrecho o ancho que el estándar)
-    const FORM_WIDTH_HINT = {
-      // 'i3': 720, // ejemplo
-    };
+    const FORM_WIDTH_HINT = { /* 'i3': 900, 'es1': 900 */ };
     function setFrameWidthHint(key){
-      frame.style.maxWidth = (FORM_WIDTH_HINT[key] || 760) + 'px';
+      frame.style.maxWidth = (FORM_WIDTH_HINT[key] || 900) + 'px';
     }
 
     function openModal(url, trigger, key){
@@ -432,7 +427,7 @@
     modal.addEventListener('click', (e)=>{ if(e.target.classList.contains('overlay')) closeModal(); });
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.classList.contains('show')) closeModal(); });
 
-    // Lanzadores de formularios (slots)
+    // Disparadores de formularios (slots)
     document.querySelectorAll('.slot').forEach(btn=>{
       btn.addEventListener('click', ()=>{
         const key = btn.getAttribute('data-test');
