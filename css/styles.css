@@ -1,63 +1,68 @@
 /* ==========================================
-   VARIABLES - PALETA VIBRANTE
+   VARIABLES - COLORES EXACTOS DEL LOGO
    ========================================== */
 :root {
-    /* Colores principales del logo */
-    --gold: #D4A574;
-    --gold-light: #E8C499;
-    --gold-dark: #B8935E;
-    --red: #C41E3A;
-    --red-dark: #8B1528;
-    --red-light: #E63956;
+    /* Colores EXACTOS extraídos del logo de Sparta Academy */
+    --gold-primary: #D4A574;      /* Dorado principal del logo */
+    --gold-light: #E0B889;        /* Dorado claro */
+    --gold-dark: #B8935E;         /* Dorado oscuro */
+    --red-primary: #C41E3A;       /* Rojo principal del logo */
+    --red-dark: #8F1529;          /* Rojo oscuro */
+    --red-light: #D9304B;         /* Rojo claro */
     
-    /* Fondo blanco */
+    /* Neutrales */
     --white: #FFFFFF;
     --off-white: #FAFAFA;
     --cream: #FFF9F5;
-    
-    /* Acentos */
     --black: #1A1A1A;
     --gray-dark: #333333;
     --gray: #666666;
     --gray-light: #999999;
     --gray-lighter: #CCCCCC;
+    --gray-lightest: #E5E5E5;
     
-    /* Tipografía moderna */
+    /* Tipografía */
     --font-primary: 'Poppins', sans-serif;
     --font-secondary: 'Montserrat', sans-serif;
     
-    /* Espaciado */
-    --space-xs: 0.5rem;
-    --space-sm: 1rem;
-    --space-md: 1.5rem;
-    --space-lg: 2rem;
-    --space-xl: 3rem;
-    --space-2xl: 4rem;
-    --space-3xl: 6rem;
+    /* Espaciado fluido y responsive */
+    --space-xs: clamp(0.25rem, 0.5vw, 0.5rem);
+    --space-sm: clamp(0.5rem, 1vw, 1rem);
+    --space-md: clamp(0.75rem, 1.5vw, 1.5rem);
+    --space-lg: clamp(1rem, 2vw, 2rem);
+    --space-xl: clamp(1.5rem, 3vw, 3rem);
+    --space-2xl: clamp(2rem, 4vw, 4rem);
+    --space-3xl: clamp(3rem, 6vw, 6rem);
     
-    /* Sombras vibrantes */
-    --shadow-gold: 0 10px 30px rgba(212, 165, 116, 0.3);
-    --shadow-red: 0 10px 30px rgba(196, 30, 58, 0.25);
+    /* Sombras */
+    --shadow-gold: 0 10px 30px rgba(212, 165, 116, 0.25);
+    --shadow-red: 0 10px 30px rgba(196, 30, 58, 0.2);
     --shadow-card: 0 5px 20px rgba(0, 0, 0, 0.08);
     --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.12);
     
-    /* Gradientes */
-    --gradient-gold: linear-gradient(135deg, #D4A574 0%, #E8C499 100%);
-    --gradient-red: linear-gradient(135deg, #C41E3A 0%, #E63956 100%);
+    /* Gradientes con colores exactos del logo */
+    --gradient-gold: linear-gradient(135deg, #D4A574 0%, #E0B889 100%);
+    --gradient-red: linear-gradient(135deg, #C41E3A 0%, #D9304B 100%);
     --gradient-hero: linear-gradient(135deg, #C41E3A 0%, #D4A574 100%);
+    
+    /* Transiciones */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ==========================================
    RESET
    ========================================== */
-* {
+*, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 html {
+    font-size: 16px;
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -68,26 +73,40 @@ body {
     overflow-x: hidden;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+button {
+    font-family: inherit;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
 /* ==========================================
-   CONTAINER
+   CONTAINER RESPONSIVE
    ========================================== */
 .container {
+    width: 100%;
     max-width: 1300px;
     margin: 0 auto;
     padding: 0 var(--space-lg);
 }
 
 /* ==========================================
-   HEADER - IMPACTANTE
+   HEADER - TOTALMENTE RESPONSIVE
    ========================================== */
 .header {
     background: var(--white);
-    padding: var(--space-lg) 0;
+    padding: var(--space-md) 0;
     position: sticky;
     top: 0;
     z-index: 1000;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    border-bottom: 3px solid var(--gold);
+    border-bottom: 3px solid var(--gold-primary);
 }
 
 .header-decoration {
@@ -112,8 +131,8 @@ body {
 }
 
 .logo {
-    width: 140px;
-    height: 140px;
+    width: clamp(80px, 15vw, 140px);
+    height: clamp(80px, 15vw, 140px);
     object-fit: contain;
     filter: drop-shadow(0 8px 16px rgba(196, 30, 58, 0.15));
     transition: transform 0.3s ease;
@@ -131,7 +150,7 @@ body {
 
 .brand-name {
     font-family: var(--font-secondary);
-    font-size: 2rem;
+    font-size: clamp(1.2rem, 3vw, 2rem);
     font-weight: 900;
     background: var(--gradient-hero);
     -webkit-background-clip: text;
@@ -142,14 +161,14 @@ body {
 }
 
 .brand-tagline {
-    font-size: 0.95rem;
+    font-size: clamp(0.75rem, 1.5vw, 0.95rem);
     color: var(--gray);
     font-weight: 600;
     letter-spacing: 0.5px;
 }
 
 /* ==========================================
-   HERO - VIBRANTE Y LLAMATIVO
+   HERO - RESPONSIVE
    ========================================== */
 .hero {
     background: var(--gradient-hero);
@@ -189,7 +208,7 @@ body {
     color: var(--white);
     padding: var(--space-xs) var(--space-md);
     border-radius: 50px;
-    font-size: 0.875rem;
+    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -199,7 +218,7 @@ body {
 
 .hero-title {
     font-family: var(--font-secondary);
-    font-size: 4rem;
+    font-size: clamp(2rem, 6vw, 4rem);
     font-weight: 900;
     color: var(--white);
     margin-bottom: var(--space-md);
@@ -209,12 +228,10 @@ body {
 
 .hero-title .highlight {
     color: var(--gold-light);
-    position: relative;
-    display: inline-block;
 }
 
 .hero-subtitle {
-    font-size: 1.4rem;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
     color: rgba(255, 255, 255, 0.95);
     margin-bottom: var(--space-xl);
     font-weight: 500;
@@ -223,7 +240,7 @@ body {
 .hero-features {
     display: flex;
     justify-content: center;
-    gap: var(--space-xl);
+    gap: var(--space-lg);
     flex-wrap: wrap;
 }
 
@@ -233,21 +250,22 @@ body {
     gap: var(--space-sm);
     color: var(--white);
     font-weight: 600;
-    font-size: 1.05rem;
+    font-size: clamp(0.9rem, 1.8vw, 1.05rem);
 }
 
 .feature-icon {
-    width: 32px;
-    height: 32px;
-    background: var(--gold);
+    width: clamp(28px, 5vw, 32px);
+    height: clamp(28px, 5vw, 32px);
+    background: var(--gold-primary);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--red-dark);
+    color: var(--white);
     font-weight: 900;
-    font-size: 1.1rem;
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
 }
 
 /* ==========================================
@@ -259,21 +277,21 @@ body {
 }
 
 /* ==========================================
-   SUBJECT CARDS - DISEÑO IMPACTANTE
+   SUBJECT CARDS - RESPONSIVE
    ========================================== */
 .subject-card {
     background: var(--white);
-    border-radius: 20px;
+    border-radius: clamp(12px, 2vw, 20px);
     margin-bottom: var(--space-xl);
     box-shadow: var(--shadow-card);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--transition);
     position: relative;
     overflow: hidden;
     border: 2px solid transparent;
 }
 
 .subject-card.active {
-    border-color: var(--gold);
+    border-color: var(--gold-primary);
 }
 
 .subject-card:hover {
@@ -302,11 +320,12 @@ body {
     gap: var(--space-lg);
     background: linear-gradient(to bottom, var(--cream), var(--white));
     border-bottom: 2px solid var(--off-white);
+    flex-wrap: wrap;
 }
 
 .card-icon {
-    width: 80px;
-    height: 80px;
+    width: clamp(60px, 10vw, 80px);
+    height: clamp(60px, 10vw, 80px);
     background: var(--gradient-gold);
     border-radius: 16px;
     display: flex;
@@ -317,26 +336,27 @@ body {
 }
 
 .card-icon svg {
-    width: 40px;
-    height: 40px;
+    width: clamp(30px, 5vw, 40px);
+    height: clamp(30px, 5vw, 40px);
     color: var(--white);
     stroke-width: 2.5;
 }
 
 .card-title-section {
     flex: 1;
+    min-width: 200px;
 }
 
 .card-title {
     font-family: var(--font-secondary);
-    font-size: 1.8rem;
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
     font-weight: 800;
     color: var(--gray-dark);
     margin-bottom: 0.25rem;
 }
 
 .card-subtitle {
-    font-size: 1rem;
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
     color: var(--gray);
     font-weight: 500;
 }
@@ -349,10 +369,11 @@ body {
     display: inline-block;
     padding: var(--space-sm) var(--space-md);
     border-radius: 50px;
-    font-size: 0.875rem;
+    font-size: clamp(0.75rem, 1.3vw, 0.875rem);
     font-weight: 700;
     letter-spacing: 0.5px;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .status-badge.available {
@@ -374,11 +395,11 @@ body {
 }
 
 /* ==========================================
-   TESTS GRID - DISEÑO MODERNO
+   TESTS GRID - RESPONSIVE
    ========================================== */
 .tests-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: var(--space-lg);
 }
 
@@ -388,7 +409,7 @@ body {
     border-radius: 16px;
     padding: var(--space-lg);
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--transition);
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
@@ -414,9 +435,13 @@ body {
 }
 
 .test-card:hover {
-    border-color: var(--red);
+    border-color: var(--red-primary);
     transform: translateY(-8px) scale(1.02);
     box-shadow: var(--shadow-red);
+}
+
+.test-card:active {
+    transform: translateY(-4px) scale(1.01);
 }
 
 .test-card > * {
@@ -431,24 +456,25 @@ body {
 }
 
 .test-badge {
-    width: 60px;
-    height: 60px;
+    width: clamp(50px, 10vw, 60px);
+    height: clamp(50px, 10vw, 60px);
     background: var(--gradient-gold);
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-secondary);
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
     font-weight: 900;
     color: var(--white);
     box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4);
-    transition: all 0.3s ease;
+    transition: var(--transition);
+    flex-shrink: 0;
 }
 
 .test-card:hover .test-badge {
     background: var(--white);
-    color: var(--red);
+    color: var(--red-primary);
 }
 
 .test-info {
@@ -456,7 +482,7 @@ body {
 }
 
 .test-title {
-    font-size: 1.3rem;
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
     font-weight: 700;
     color: var(--gray-dark);
     margin-bottom: 0.25rem;
@@ -468,7 +494,7 @@ body {
 }
 
 .test-type {
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
     color: var(--gray);
     font-weight: 500;
     transition: color 0.3s ease;
@@ -484,7 +510,7 @@ body {
     justify-content: space-between;
     padding-top: var(--space-sm);
     border-top: 2px solid var(--gray-lighter);
-    transition: all 0.3s ease;
+    transition: var(--transition);
 }
 
 .test-card:hover .test-action {
@@ -493,8 +519,8 @@ body {
 
 .action-text {
     font-weight: 700;
-    color: var(--red);
-    font-size: 1rem;
+    color: var(--red-primary);
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
     transition: color 0.3s ease;
 }
 
@@ -503,10 +529,11 @@ body {
 }
 
 .action-icon {
-    width: 24px;
-    height: 24px;
-    color: var(--red);
-    transition: all 0.3s ease;
+    width: clamp(20px, 4vw, 24px);
+    height: clamp(20px, 4vw, 24px);
+    color: var(--red-primary);
+    transition: var(--transition);
+    flex-shrink: 0;
 }
 
 .test-card:hover .action-icon {
@@ -515,7 +542,7 @@ body {
 }
 
 /* ==========================================
-   MODAL - DISEÑO ELEGANTE
+   MODAL - RESPONSIVE
    ========================================== */
 .modal {
     position: fixed;
@@ -527,6 +554,7 @@ body {
     display: none;
     align-items: center;
     justify-content: center;
+    padding: var(--space-md);
 }
 
 .modal.active {
@@ -545,14 +573,14 @@ body {
 
 .modal-wrapper {
     position: relative;
-    width: 95%;
+    width: 100%;
     max-width: 1400px;
     height: 90vh;
     background: var(--white);
-    border-radius: 20px;
+    border-radius: clamp(12px, 2vw, 20px);
     overflow: hidden;
     box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
-    border: 3px solid var(--gold);
+    border: 3px solid var(--gold-primary);
     display: flex;
     flex-direction: column;
     animation: modalSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -571,11 +599,12 @@ body {
 
 .modal-header {
     background: var(--gradient-hero);
-    padding: var(--space-lg) var(--space-xl);
+    padding: var(--space-md) var(--space-lg);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 3px solid var(--gold);
+    border-bottom: 3px solid var(--gold-primary);
+    flex-shrink: 0;
 }
 
 .modal-brand {
@@ -585,21 +614,21 @@ body {
 }
 
 .modal-logo {
-    height: 60px;
+    height: clamp(40px, 8vw, 60px);
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
 }
 
 .modal-title {
     font-family: var(--font-secondary);
-    font-size: 1.5rem;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
     font-weight: 900;
     color: var(--white);
     letter-spacing: 1px;
 }
 
 .modal-close {
-    width: 50px;
-    height: 50px;
+    width: clamp(40px, 8vw, 50px);
+    height: clamp(40px, 8vw, 50px);
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255, 255, 255, 0.4);
@@ -609,18 +638,19 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: var(--transition);
+    flex-shrink: 0;
 }
 
 .modal-close:hover {
     background: var(--white);
-    color: var(--red);
+    color: var(--red-primary);
     transform: rotate(90deg);
 }
 
 .modal-close svg {
-    width: 24px;
-    height: 24px;
+    width: clamp(20px, 4vw, 24px);
+    height: clamp(20px, 4vw, 24px);
 }
 
 .modal-body {
@@ -635,59 +665,53 @@ body {
 }
 
 /* ==========================================
-   FOOTER
+   FOOTER - RESPONSIVE
    ========================================== */
 .footer {
     background: var(--gray-dark);
     padding: var(--space-xl) 0;
-    border-top: 4px solid var(--gold);
+    border-top: 4px solid var(--gold-primary);
 }
 
 .footer-content {
     display: flex;
     align-items: center;
     gap: var(--space-xl);
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .footer-logo img {
-    height: 60px;
+    height: clamp(50px, 8vw, 60px);
     filter: drop-shadow(0 4px 12px rgba(212, 165, 116, 0.3));
 }
 
 .footer-info {
     flex: 1;
+    min-width: 250px;
+    text-align: center;
 }
 
 .footer-text {
     color: var(--white);
     font-weight: 600;
     margin-bottom: 0.25rem;
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
 }
 
 .footer-note {
     color: var(--gray-light);
-    font-size: 0.875rem;
+    font-size: clamp(0.75rem, 1.3vw, 0.875rem);
 }
 
 /* ==========================================
-   RESPONSIVE
+   BREAKPOINTS ESPECÍFICOS
    ========================================== */
+
+/* Tablets en Portrait (601px - 768px) */
 @media (max-width: 768px) {
-    .hero-title {
-        font-size: 2.5rem;
-    }
-    
-    .logo {
-        width: 100px;
-        height: 100px;
-    }
-    
-    .brand-name {
-        font-size: 1.5rem;
-    }
-    
-    .tests-grid {
-        grid-template-columns: 1fr;
+    .hero-features {
+        gap: var(--space-md);
     }
     
     .card-header {
@@ -695,29 +719,128 @@ body {
         align-items: flex-start;
     }
     
+    .card-status {
+        width: 100%;
+    }
+    
+    .status-badge {
+        display: block;
+        text-align: center;
+    }
+}
+
+/* Mobile en Landscape y Tablets pequeñas (481px - 600px) */
+@media (max-width: 600px) {
+    .tests-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .brand {
+        gap: var(--space-sm);
+    }
+}
+
+/* Mobile en Portrait (320px - 480px) */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 var(--space-md);
+    }
+    
+    .brand {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+    }
+    
     .hero-features {
-        gap: var(--space-md);
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+    
+    .feature-item {
+        justify-content: center;
+    }
+    
+    .modal-wrapper {
+        border-radius: 0;
+        height: 100vh;
+    }
+    
+    .modal {
+        padding: 0;
     }
     
     .footer-content {
         flex-direction: column;
         text-align: center;
     }
+    
+    .footer-info {
+        text-align: center;
+    }
 }
 
-@media (max-width: 480px) {
-    .hero-title {
-        font-size: 2rem;
+/* Extra Small Mobile (320px) */
+@media (max-width: 360px) {
+    html {
+        font-size: 14px;
     }
     
-    .brand {
+    .test-header {
         flex-direction: column;
         align-items: flex-start;
     }
+}
+
+/* Desktop Grande (1441px+) */
+@media (min-width: 1441px) {
+    .container {
+        max-width: 1400px;
+    }
+}
+
+/* ==========================================
+   MEJORAS DE ACCESIBILIDAD
+   ========================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Soporte para touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .test-card:active {
+        transform: scale(0.98);
+    }
     
-    .modal-wrapper {
-        width: 100%;
-        height: 100vh;
-        border-radius: 0;
+    .logo:active {
+        transform: scale(0.95);
+    }
+}
+
+/* ==========================================
+   OPTIMIZACIONES DE RENDIMIENTO
+   ========================================== */
+@media (min-width: 769px) {
+    .hero-bg-pattern {
+        will-change: transform;
+    }
+}
+
+/* Print styles */
+@media print {
+    .header,
+    .footer,
+    .modal {
+        display: none;
+    }
+    
+    .main {
+        padding: 0;
     }
 }
