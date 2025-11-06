@@ -1,221 +1,355 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sparta Academy | Simuladores Académicos</title>
 
-  <!-- Performance: Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Tipografía -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
 
   <style>
     :root{
       --gold:#D4A574;
-      --gold-600:#B8935E;
+      --gold-700:#B8935E;
       --red:#C41E3A;
-      --bg:#FAFAFA;
-      --fg:#171717;
-      --muted:#6B7280;
-      --line:#E5E7EB;
+      --bg:#F7F7F8;
       --card:#FFFFFF;
-      --radius:12px;
+      --ink:#111318;
+      --muted:#6B7280;
+      --line:#E6E7EB;
 
-      --shadow-sm:0 1px 2px rgba(0,0,0,.05);
-      --shadow:0 4px 10px rgba(0,0,0,.08);
-      --shadow-lg:0 18px 48px rgba(0,0,0,.12);
+      --radius:14px;
+      --shadow-sm:0 6px 18px rgba(0,0,0,.06);
+      --shadow:0 16px 40px rgba(0,0,0,.10);
+      --shadow-lg:0 28px 80px rgba(0,0,0,.14);
+      --t-fast: cubic-bezier(.2,.7,.3,1);
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
     body{
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,sans-serif;
       background:var(--bg);
-      color:var(--fg);
+      color:var(--ink);
       line-height:1.6;
     }
     img{display:block;max-width:100%;height:auto}
-
-    .container{max-width:1280px;margin:0 auto;padding:0 1.25rem}
+    .container{max-width:1240px;margin:0 auto;padding:0 1.25rem}
 
     /* Header */
     header{
-      background:#fff;border-bottom:1px solid var(--line);box-shadow:var(--shadow-sm);
-      position:sticky;top:0;z-index:50;
+      position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);
+      box-shadow:0 4px 12px rgba(0,0,0,.03);
+      backdrop-filter:saturate(160%) blur(4px);
     }
     .header-inner{
       display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 0;
     }
-    .brand{display:flex;align-items:center;gap:1rem}
-    .brand img{width:110px;height:110px;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(196,30,58,.18))}
-    .brand-title{font-weight:900;letter-spacing:-.3px;font-size:1.5rem}
+    .brand{display:flex;align-items:center;gap:1rem;transform:translateZ(0)}
+    .brand img{width:110px;height:110px;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(196,30,58,.18));transition:transform .35s var(--t-fast)}
+    .brand:hover img{transform:scale(1.03) rotate(.8deg)}
+    .brand-title{font-weight:900;letter-spacing:-.4px;font-size:1.55rem}
     .brand-sub{color:var(--muted);font-weight:600;font-size:.95rem}
+    .chip{background:var(--gold);color:#fff;border-radius:999px;padding:.4rem .8rem;font-weight:800;box-shadow:0 8px 22px rgba(212,165,116,.35)}
 
     /* Hero */
-    .hero{background:#111; color:#fff; padding:3rem 0; border-bottom:3px solid var(--gold)}
-    .hero h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;letter-spacing:-.5px;margin-bottom:.35rem}
-    .hero p{color:#d1d5db}
-    .hero-badges{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem}
-    .badge{background:var(--gold);color:#fff;border-radius:999px;padding:.35rem .8rem;font-weight:800;font-size:.8rem}
+    .hero{
+      position:relative;overflow:hidden;background:#111216;color:#fff;border-bottom:3px solid var(--gold);
+    }
+    .hero::before{
+      content:"";position:absolute;inset:-20% -10% auto; height:360px;
+      background:
+        radial-gradient(900px 280px at 10% 10%, rgba(196,30,58,.25), transparent 55%),
+        radial-gradient(800px 260px at 90% 0%, rgba(212,165,116,.20), transparent 60%);
+      transform:translateZ(0);
+    }
+    .hero-inner{position:relative;padding:3.2rem 0;text-align:center}
+    .hero h1{font-size:clamp(1.9rem,4vw,2.7rem);letter-spacing:-.6px;font-weight:900;margin-bottom:.4rem}
+    .hero p{color:#cdd5df}
+    .hero-badges{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}
+    .hero-badges .chip{background:#1C1F26;border:1px solid #2a2f39;color:#e5e7eb;box-shadow:none}
 
-    /* Catalog */
-    .catalog{display:grid;gap:1.25rem;padding:2rem 0}
-    .category{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-    .category-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;background:#F9FAFB;border-bottom:1px solid var(--line)}
-    .category-header h3{font-size:1rem;letter-spacing:.4px;font-weight:900}
-    .count{background:#111;color:#fff;border-radius:6px;padding:.35rem .6rem;font-size:.78rem;font-weight:800}
+    /* Sección acordeones */
+    .grid{
+      display:grid;gap:1.25rem;padding:2rem 0 2.5rem;
+      grid-template-columns:1fr;
+    }
 
-    .category-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.75rem;padding:1rem}
-    .test-btn{
+    .accordion{
+      background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+      box-shadow:var(--shadow-sm); transform:translateZ(0);
+      transition:box-shadow .35s var(--t-fast), border-color .35s var(--t-fast);
+    }
+    .accordion:has(.panel.open){box-shadow:var(--shadow)}
+    .header-btn{
+      width:100%;display:flex;align-items:center;gap:1rem;justify-content:space-between;
+      background:linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.0) 100%), #F9FAFB;
+      border:0;border-bottom:1px solid var(--line);
+      padding:1rem 1.25rem;cursor:pointer;
+      transition:background .25s var(--t-fast), transform .25s var(--t-fast);
+      will-change:transform;
+    }
+    .header-btn:hover{background:#F3F4F6;transform:translateY(-1px)}
+    .title-wrap{display:flex;align-items:center;gap:.85rem}
+    .icon-box{
+      width:48px;height:48px;border-radius:12px;background:#111;color:#fff;display:grid;place-items:center;
+      box-shadow:0 10px 24px rgba(0,0,0,.15), inset 0 0 0 2px #222;
+    }
+    .icon-box svg{width:26px;height:26px}
+    .acc-title{font-weight:900;letter-spacing:.4px}
+    .acc-sub{color:var(--muted);font-weight:600;font-size:.9rem}
+
+    .chev{
+      width:36px;height:36px;border-radius:10px;border:2px solid #d1d5db;display:grid;place-items:center;color:#374151;
+      transition:transform .35s var(--t-fast), background .25s;
+    }
+    .header-btn:hover .chev{background:#111;color:#fff;border-color:#111}
+    .chev svg{width:18px;height:18px;transition:transform .35s var(--t-fast)}
+    .header-btn[aria-expanded="true"] .chev svg{transform:rotate(180deg)}
+
+    .panel{
+      height:0; overflow:hidden; transform:translateZ(0);
+      transition:height .45s var(--t-fast);
+    }
+    .panel.open{ /* height is set inline by JS for smooth animation */ }
+
+    .slots{
+      display:grid;gap:.75rem;padding:1rem; background:#fff;
+      grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+    }
+    .slot{
       background:#111;color:#fff;border:2px solid transparent;border-radius:10px;
       padding:.9rem 1rem;font-weight:900;letter-spacing:.6px;text-transform:uppercase;
-      display:flex;align-items:center;justify-content:center;gap:.5rem;transition:.25s;box-shadow:var(--shadow-sm)
+      display:flex;align-items:center;justify-content:center;gap:.5rem;
+      transition:transform .25s var(--t-fast), background .25s var(--t-fast), box-shadow .25s var(--t-fast);
+      box-shadow:0 8px 18px rgba(0,0,0,.12);
     }
-    .test-btn:hover{background:var(--red);transform:translateY(-2px)}
-    .test-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-
-    /* Footer */
-    footer{background:#111;color:#cbd5e1;border-top:3px solid var(--gold);padding:1.5rem 0;margin-top:1rem}
-    .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem}
-    .foot-note{color:#9CA3AF;font-size:.9rem}
+    .slot:hover{background:var(--red); transform:translateY(-3px); box-shadow:0 14px 34px rgba(196,30,58,.28)}
+    .slot:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 
     /* Modal */
     .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:1000;padding:1rem}
-    .modal.open{display:flex}
-    .overlay{position:absolute;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(4px)}
+    .modal.show{display:flex;animation:fadeIn .32s var(--t-fast)}
+    .overlay{position:absolute;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(4px);animation:overlayIn .32s var(--t-fast)}
     .dialog{
-      position:relative;width:min(1400px,96%);height:min(92vh,1000px);
-      background:#fff;border:3px solid var(--gold);border-radius:14px;overflow:hidden;
-      display:flex;flex-direction:column;box-shadow:var(--shadow-lg)
+      position:relative;width:min(1400px,96%);height:min(92vh,1000px);background:#fff;border:3px solid var(--gold);
+      border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;
+      animation:dialogIn .38s var(--t-fast);
     }
     .dialog-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:#111;color:#fff;padding:1rem 1.25rem;border-bottom:3px solid var(--gold)}
     .dialog-title{font-weight:900;letter-spacing:.5px}
-    .close{background:transparent;color:#fff;width:44px;height:44px;border:2px solid #3f3f46;border-radius:8px;display:grid;place-items:center;font-size:1.6rem;line-height:1;transition:.2s}
+    .close{background:transparent;color:#fff;width:44px;height:44px;border:2px solid #3f3f46;border-radius:10px;display:grid;place-items:center;font-size:1.6rem;line-height:1;transition:.2s var(--t-fast)}
     .close:hover{background:var(--red);border-color:var(--red)}
     .frame-wrap{position:relative;flex:1}
     .frame-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
-    /* Responsive */
-    @media (max-width:768px){
-      .brand img{width:84px;height:84px}
-      .footer-inner{flex-direction:column;text-align:center}
+    /* Footer */
+    footer{background:#111;color:#cbd5e1;border-top:3px solid var(--gold);padding:1.2rem 0}
+    .foot{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .foot small{color:#9ca3af}
+
+    /* Animations */
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes overlayIn{from{opacity:0}to{opacity:1}}
+    @keyframes dialogIn{from{opacity:0; transform:translateY(12px) scale(.98)} to{opacity:1; transform:translateY(0) scale(1)}}
+
+    /* Responsive tweaks */
+    @media (max-width:820px){
+      .brand img{width:88px;height:88px}
+      .slots{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
     }
     @media (max-width:640px){
       .dialog{width:100%;height:100vh;border-radius:0;border-width:0}
       .modal{padding:0}
+      .header-inner{flex-direction:column;align-items:flex-start}
     }
   </style>
 </head>
 <body>
+  <!-- Header -->
   <header>
     <div class="container">
       <div class="header-inner">
         <div class="brand">
-          <img src="images/logo.png" alt="Sparta Academy">
+          <img src="images/logo.png" alt="Sparta Academy" />
           <div>
             <div class="brand-title">SPARTA ACADEMY</div>
             <div class="brand-sub">Excelencia en Preparación Académica</div>
           </div>
         </div>
-        <div class="badge">Proceso 2024</div>
+        <span class="chip">Proceso 2024</span>
       </div>
     </div>
   </header>
 
+  <!-- Hero -->
   <section class="hero">
-    <div class="container">
+    <div class="container hero-inner">
       <h1>Simuladores de Pruebas Académicas</h1>
       <p>Reclutamiento Policía Nacional del Ecuador</p>
       <div class="hero-badges">
-        <span class="badge">Acceso ilimitado</span>
-        <span class="badge">Práctica constante</span>
-        <span class="badge">100% Gratuito</span>
+        <span class="chip">Acceso ilimitado</span>
+        <span class="chip">Práctica constante</span>
+        <span class="chip">100% Gratuito</span>
       </div>
     </div>
   </section>
 
+  <!-- Acordeones por materia -->
   <main class="container">
-    <section class="catalog">
+    <section class="grid">
 
       <!-- ESTUDIOS SOCIALES -->
-      <div class="category">
-        <div class="category-header">
-          <h3>Estudios Sociales</h3>
-          <span class="count">4 pruebas</span>
+      <article class="accordion" data-acc>
+        <button class="header-btn" aria-expanded="false">
+          <div class="title-wrap">
+            <div class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5Z"/><path d="M2 12l10 5 10-5"/>
+              </svg>
+            </div>
+            <div>
+              <div class="acc-title">Estudios Sociales</div>
+              <div class="acc-sub">Historia • Geografía • Sociedad</div>
+            </div>
+          </div>
+          <span class="chev" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="panel">
+          <div class="slots">
+            <button class="slot" data-test="es1">ES1</button>
+            <button class="slot" data-test="es2">ES2</button>
+            <button class="slot" data-test="es3">ES3</button>
+            <button class="slot" data-test="es4">ES4</button>
+          </div>
         </div>
-        <div class="category-grid">
-          <button class="test-btn" data-test="es1">ES1</button>
-          <button class="test-btn" data-test="es2">ES2</button>
-          <button class="test-btn" data-test="es3">ES3</button>
-          <button class="test-btn" data-test="es4">ES4</button>
-        </div>
-      </div>
+      </article>
 
       <!-- INGLÉS -->
-      <div class="category">
-        <div class="category-header">
-          <h3>Inglés</h3>
-          <span class="count">4 pruebas</span>
+      <article class="accordion" data-acc>
+        <button class="header-btn" aria-expanded="false">
+          <div class="title-wrap">
+            <div class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="acc-title">Inglés</div>
+              <div class="acc-sub">Competencias en idioma</div>
+            </div>
+          </div>
+          <span class="chev" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="panel">
+          <div class="slots">
+            <button class="slot" data-test="i1">I1</button>
+            <button class="slot" data-test="i2">I2</button>
+            <button class="slot" data-test="i3">I3</button>
+            <button class="slot" data-test="i4">I4</button>
+          </div>
         </div>
-        <div class="category-grid">
-          <button class="test-btn" data-test="i1">I1</button>
-          <button class="test-btn" data-test="i2">I2</button>
-          <button class="test-btn" data-test="i3">I3</button>
-          <button class="test-btn" data-test="i4">I4</button>
-        </div>
-      </div>
+      </article>
 
       <!-- LENGUA Y LITERATURA -->
-      <div class="category">
-        <div class="category-header">
-          <h3>Lengua y Literatura</h3>
-          <span class="count">4 pruebas</span>
+      <article class="accordion" data-acc>
+        <button class="header-btn" aria-expanded="false">
+          <div class="title-wrap">
+            <div class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="acc-title">Lengua y Literatura</div>
+              <div class="acc-sub">Comprensión lectora • Gramática</div>
+            </div>
+          </div>
+          <span class="chev" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="panel">
+          <div class="slots">
+            <button class="slot" data-test="l1">L1</button>
+            <button class="slot" data-test="l2">L2</button>
+            <button class="slot" data-test="l3">L3</button>
+            <button class="slot" data-test="l4">L4</button>
+          </div>
         </div>
-        <div class="category-grid">
-          <button class="test-btn" data-test="l1">L1</button>
-          <button class="test-btn" data-test="l2">L2</button>
-          <button class="test-btn" data-test="l3">L3</button>
-          <button class="test-btn" data-test="l4">L4</button>
-        </div>
-      </div>
+      </article>
 
       <!-- MATEMÁTICAS -->
-      <div class="category">
-        <div class="category-header">
-          <h3>Matemáticas</h3>
-          <span class="count">4 pruebas</span>
+      <article class="accordion" data-acc>
+        <button class="header-btn" aria-expanded="false">
+          <div class="title-wrap">
+            <div class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18M3 15h18M15 3v18"/>
+              </svg>
+            </div>
+            <div>
+              <div class="acc-title">Matemáticas</div>
+              <div class="acc-sub">Razonamiento • Cálculo</div>
+            </div>
+          </div>
+          <span class="chev" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="panel">
+          <div class="slots">
+            <button class="slot" data-test="m1">M1</button>
+            <button class="slot" data-test="m2">M2</button>
+            <button class="slot" data-test="m3">M3</button>
+            <button class="slot" data-test="m4">M4</button>
+          </div>
         </div>
-        <div class="category-grid">
-          <button class="test-btn" data-test="m1">M1</button>
-          <button class="test-btn" data-test="m2">M2</button>
-          <button class="test-btn" data-test="m3">M3</button>
-          <button class="test-btn" data-test="m4">M4</button>
-        </div>
-      </div>
+      </article>
 
       <!-- PERSONALIDAD -->
-      <div class="category">
-        <div class="category-header">
-          <h3>Personalidad</h3>
-          <span class="count">7 pruebas</span>
+      <article class="accordion" data-acc>
+        <button class="header-btn" aria-expanded="false">
+          <div class="title-wrap">
+            <div class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2a6 6 0 00-6 6v2a6 6 0 006 6 6 6 0 006-6V8a6 6 0 00-6-6z"/><path d="M8 20h8"/>
+              </svg>
+            </div>
+            <div>
+              <div class="acc-title">Personalidad</div>
+              <div class="acc-sub">Perfiles • Rasgos • Ajuste</div>
+            </div>
+          </div>
+          <span class="chev" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+        </button>
+        <div class="panel">
+          <div class="slots">
+            <button class="slot" data-test="p1">P1</button>
+            <button class="slot" data-test="p2">P2</button>
+            <button class="slot" data-test="p3">P3</button>
+            <button class="slot" data-test="p4">P4</button>
+            <button class="slot" data-test="p5">P5</button>
+            <button class="slot" data-test="p6">P6</button>
+            <button class="slot" data-test="p7">P7</button>
+          </div>
         </div>
-        <div class="category-grid">
-          <button class="test-btn" data-test="p1">P1</button>
-          <button class="test-btn" data-test="p2">P2</button>
-          <button class="test-btn" data-test="p3">P3</button>
-          <button class="test-btn" data-test="p4">P4</button>
-          <button class="test-btn" data-test="p5">P5</button>
-          <button class="test-btn" data-test="p6">P6</button>
-          <button class="test-btn" data-test="p7">P7</button>
-        </div>
-      </div>
+      </article>
 
     </section>
   </main>
 
-  <!-- Modal accesible -->
-  <div id="formModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+  <!-- Modal -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
     <div class="overlay" data-close></div>
     <div class="dialog" role="document">
       <div class="dialog-header">
@@ -228,17 +362,16 @@
     </div>
   </div>
 
+  <!-- Footer -->
   <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <div>&copy; 2024 Sparta Academy</div>
-        <div class="foot-note">La función de guardar está inhabilitada</div>
-      </div>
+    <div class="container foot">
+      <div>&copy; 2024 Sparta Academy</div>
+      <small>La función de guardar está inhabilitada</small>
     </div>
   </footer>
 
   <script>
-    // Mapa de URLs
+    // URLs de formularios
     const FORM_URLS = {
       es1:"https://docs.google.com/forms/d/e/1FAIpQLSeCBdHUIledYtSLNmpkxq3MHQF6h8bYOG9ZSGfT6cdEFbVwVA/viewform?usp=header",
       es2:"https://docs.google.com/forms/d/e/1FAIpQLSfCzx3jeM2WJuBFyY3XAvF-Viim0h9G6HP1LDGbcqjOSMMhXw/viewform?usp=header",
@@ -265,39 +398,42 @@
       p7:"https://docs.google.com/forms/d/e/1FAIpQLSdk3Jdid-LbWV7rnzD54GF_Pwn7r9b7xHD9ftk1Kd5o2p6ILg/viewform?usp=header"
     };
 
-    const modal = document.getElementById('formModal');
+    // Modal
+    const modal = document.getElementById('modal');
     const frame = document.getElementById('formFrame');
-    const triggers = document.querySelectorAll('.test-btn');
-    const closers = modal.querySelectorAll('[data-close]');
+    const closeEls = modal.querySelectorAll('[data-close]');
     let lastTrigger = null;
 
     function openModal(url, trigger){
       lastTrigger = trigger;
       frame.src = url;
-      modal.classList.add('open');
+      modal.classList.add('show');
+      document.body.style.overflow='hidden';
       // Focus trap básico
       const focusables = modal.querySelectorAll('button,[href],iframe,[tabindex]:not([tabindex="-1"])');
       const first = focusables[0], last = focusables[focusables.length-1];
       first.focus();
       modal.onkeydown = (e)=>{
-        if(e.key === 'Tab'){
-          if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
-          else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+        if(e.key==='Tab'){
+          if(e.shiftKey && document.activeElement===first){e.preventDefault();last.focus();}
+          else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first.focus();}
         }
-        if(e.key === 'Escape'){ closeModal(); }
+        if(e.key==='Escape'){closeModal();}
       };
-      document.body.style.overflow='hidden';
     }
-
     function closeModal(){
-      modal.classList.remove('open');
+      modal.classList.remove('show');
       frame.src = '';
       modal.onkeydown = null;
       document.body.style.overflow='';
       if(lastTrigger) lastTrigger.focus();
     }
+    closeEls.forEach(el=>el.addEventListener('click', closeModal));
+    modal.addEventListener('click', (e)=>{ if(e.target.classList.contains('overlay')) closeModal(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.classList.contains('show')) closeModal(); });
 
-    triggers.forEach(btn=>{
+    // Lanzadores de formularios (slots)
+    document.querySelectorAll('.slot').forEach(btn=>{
       btn.addEventListener('click', ()=>{
         const key = btn.getAttribute('data-test');
         const url = FORM_URLS[key];
@@ -305,11 +441,36 @@
       });
     });
 
-    closers.forEach(el=> el.addEventListener('click', closeModal));
-    // Cerrar con clic fuera del diálogo
-    modal.addEventListener('click', (e)=>{ if(e.target.classList.contains('overlay')) closeModal(); });
-    // Cerrar con ESC global
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
+    // Acordeones con animación de altura
+    document.querySelectorAll('[data-acc]').forEach(acc=>{
+      const btn = acc.querySelector('.header-btn');
+      const panel = acc.querySelector('.panel');
+      btn.addEventListener('click', ()=>{
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        // cerrar si está abierto
+        if(expanded){
+          btn.setAttribute('aria-expanded','false');
+          panel.style.height = panel.scrollHeight + 'px'; // fijar para animar
+          requestAnimationFrame(()=>{ panel.style.height = '0px'; panel.classList.remove('open'); });
+          return;
+        }
+        // cerrar otros abiertos (acordeón exclusivo)
+        document.querySelectorAll('[data-acc] .header-btn[aria-expanded="true"]').forEach(openBtn=>{
+          openBtn.setAttribute('aria-expanded','false');
+          const p = openBtn.closest('[data-acc]').querySelector('.panel');
+          p.style.height = p.scrollHeight + 'px';
+          requestAnimationFrame(()=>{ p.style.height = '0px'; p.classList.remove('open'); });
+        });
+        // abrir actual
+        btn.setAttribute('aria-expanded','true');
+        panel.classList.add('open');
+        panel.style.height = 'auto';
+        const end = panel.scrollHeight + 'px';
+        panel.style.height = '0px';
+        requestAnimationFrame(()=>{ panel.style.height = end; });
+        panel.addEventListener('transitionend', ()=>{ if(btn.getAttribute('aria-expanded')==='true'){ panel.style.height='auto'; }}, { once:true });
+      });
+    });
   </script>
 </body>
 </html>
