@@ -103,19 +103,114 @@ header{
 }
 .panel.open{ /* height is set inline by JS for smooth animation */ }
 
-.slots{
-  display:grid;gap:.75rem;padding:1rem; background:#fff;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+
+/* --- ESTILOS DE TARJETAS DE PRUEBA (REEMPLAZO DE .SLOTS) --- */
+.test-grid {
+  display: grid;
+  /* Esto crea la cuadrícula responsive.
+     - auto-fit: Llena el espacio con tantas columnas como quepan.
+     - minmax(280px, 1fr): Cada columna mide un mínimo de 280px y un máximo de 1 fracción (se reparten el espacio).
+     En pantallas pequeñas, solo cabe 1 (280px). En medianas 2 o 3. En grandes, 4.
+  */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  padding: 1.25rem;
+  background-color: #f9fafb; /* Un fondo muy ligero para el panel */
 }
-.slot{
-  background:#111;color:#fff;border:2px solid transparent;border-radius:10px;
-  padding:.9rem 1rem;font-weight:900;letter-spacing:.6px;text-transform:uppercase;
-  display:flex;align-items:center;justify-content:center;gap:.5rem;
-  transition:transform .25s var(--t-fast), background .25s var(--t-fast), box-shadow .25s var(--t-fast);
-  box-shadow:0 8px 18px rgba(0,0,0,.12);
+
+.test-card {
+  /* Reseteo de botón */
+  background: none;
+  border: none;
+  font-family: inherit;
+  padding: 0;
+  
+  /* Estilos de la tarjeta */
+  display: block;
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform .3s var(--t-fast), box-shadow .3s var(--t-fast);
 }
-.slot:hover{background:var(--red); transform:translateY(-3px); box-shadow:0 14px 34px rgba(196,30,58,.28)}
-.slot:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+/* Animación al pasar el cursor */
+.test-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+}
+
+.test-card:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.card-number {
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: var(--gold);
+  opacity: 0.7;
+  line-height: 1;
+}
+
+.card-pretitle {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-top: 0.5rem;
+}
+
+.card-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0.25rem 0 0.5rem;
+}
+
+.card-desc {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.card-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.8rem 1.25rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: background .25s var(--t-fast);
+}
+
+.card-button span {
+  font-size: 1.25rem;
+  line-height: 1;
+  transition: transform .3s var(--t-fast);
+}
+
+/* Animación del botón dentro de la tarjeta */
+.test-card:hover .card-button {
+  background: var(--red);
+}
+
+.test-card:hover .card-button span {
+  transform: translateX(5px);
+}
+/* --- FIN DE ESTILOS DE TARJETAS --- */
+
 
 /* Modal */
 .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:1000;padding:1rem}
@@ -181,10 +276,30 @@ footer{background:#111;color:#cbd5e1;border-top:3px solid var(--gold);padding:1.
 /* Responsive tweaks */
 @media (max-width:820px){
   .brand img{width:88px;height:88px}
-  .slots{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+  /* Ajuste responsive del grid de tarjetas (aunque auto-fit ya ayuda) */
+  .test-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    padding: 1rem;
+    gap: 1rem;
+  }
 }
 @media (max-width:640px){
   .dialog{width:100%;height:100vh;border-radius:0;border-width:0}
   .modal{padding:0}
   .header-inner{flex-direction:column;align-items:flex-start}
+
+  /* Ajustes para tarjetas en móviles */
+  .test-card {
+    padding: 1.25rem;
+  }
+  .card-title {
+    font-size: 1.15rem;
+  }
+  .card-desc {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  .card-button {
+    padding: 0.75rem 1rem;
+  }
 }
