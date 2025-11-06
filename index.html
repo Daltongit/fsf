@@ -3,43 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sparta Academy | Plataforma de Simuladores Académicos</title>
+    <title>Sparta Academy | Simuladores de Pruebas 2024</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header Profesional -->
+    <!-- Header Impactante -->
     <header class="header">
+        <div class="header-decoration"></div>
         <div class="container">
             <div class="header-content">
                 <div class="brand">
                     <img src="images/logo.png" alt="Sparta Academy" class="logo">
-                    <div class="brand-text">
-                        <h1 class="brand-title">SPARTA ACADEMY</h1>
-                        <p class="brand-subtitle">Centro de Preparación Académica</p>
+                    <div class="brand-info">
+                        <h1 class="brand-name">SPARTA ACADEMY</h1>
+                        <p class="brand-tagline">Excelencia en Preparación Académica</p>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Banner -->
     <section class="hero">
+        <div class="hero-bg-pattern"></div>
         <div class="container">
             <div class="hero-content">
-                <h2 class="hero-title">Simuladores de Pruebas Académicas</h2>
-                <p class="hero-description">
-                    Preparación para el proceso de reclutamiento de la Policía Nacional del Ecuador 2024
+                <span class="hero-badge">Proceso 2024</span>
+                <h2 class="hero-title">
+                    <span class="highlight">Simuladores</span> de Pruebas<br>
+                    Académicas Gratuitas
+                </h2>
+                <p class="hero-subtitle">
+                    Reclutamiento Policía Nacional del Ecuador
                 </p>
-                <div class="hero-note">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="12" y1="16" x2="12" y2="12"/>
-                        <line x1="12" y1="8" x2="12.01" y2="8"/>
-                    </svg>
-                    <span>Practica cuantas veces desees. La función de guardar está inhabilitada.</span>
+                <div class="hero-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Acceso ilimitado</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Práctica constante</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>100% Gratuito</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,126 +60,169 @@
     <!-- Main Content -->
     <main class="main">
         <div class="container">
-            <!-- Sección de Sociales -->
-            <section class="subject-section">
-                <div class="subject-header">
-                    <div class="subject-info">
-                        <h3 class="subject-title">Ciencias Sociales</h3>
-                        <p class="subject-description">Evaluaciones de conocimientos en historia, geografía y estudios sociales</p>
+            <!-- Tarjeta de Sociales - Destacada -->
+            <div class="subject-card active">
+                <div class="card-decoration"></div>
+                <div class="card-header">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z"/>
+                            <path d="M2 17L12 22L22 17"/>
+                            <path d="M2 12L12 17L22 12"/>
+                        </svg>
                     </div>
-                    <div class="subject-badge">4 Pruebas</div>
+                    <div class="card-title-section">
+                        <h3 class="card-title">Ciencias Sociales</h3>
+                        <p class="card-subtitle">Historia • Geografía • Estudios Sociales</p>
+                    </div>
+                    <div class="card-status">
+                        <span class="status-badge available">4 Pruebas Disponibles</span>
+                    </div>
                 </div>
                 
-                <div class="tests-container">
-                    <button class="test-item" data-test="sociales-p1">
-                        <div class="test-number">01</div>
-                        <div class="test-details">
-                            <h4 class="test-name">Prueba 1</h4>
-                            <p class="test-meta">Sociales</p>
-                        </div>
-                        <div class="test-arrow">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="5" y1="12" x2="19" y2="12"/>
-                                <polyline points="12 5 19 12 12 19"/>
-                            </svg>
-                        </div>
-                    </button>
+                <div class="card-body">
+                    <div class="tests-grid">
+                        <button class="test-card" data-test="sociales-p1">
+                            <div class="test-header">
+                                <div class="test-badge">P1</div>
+                                <div class="test-info">
+                                    <h4 class="test-title">Prueba 1</h4>
+                                    <p class="test-type">Sociales</p>
+                                </div>
+                            </div>
+                            <div class="test-action">
+                                <span class="action-text">Iniciar Prueba</span>
+                                <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </div>
+                        </button>
 
-                    <button class="test-item" data-test="sociales-p2">
-                        <div class="test-number">02</div>
-                        <div class="test-details">
-                            <h4 class="test-name">Prueba 2</h4>
-                            <p class="test-meta">Sociales</p>
-                        </div>
-                        <div class="test-arrow">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="5" y1="12" x2="19" y2="12"/>
-                                <polyline points="12 5 19 12 12 19"/>
-                            </svg>
-                        </div>
-                    </button>
+                        <button class="test-card" data-test="sociales-p2">
+                            <div class="test-header">
+                                <div class="test-badge">P2</div>
+                                <div class="test-info">
+                                    <h4 class="test-title">Prueba 2</h4>
+                                    <p class="test-type">Sociales</p>
+                                </div>
+                            </div>
+                            <div class="test-action">
+                                <span class="action-text">Iniciar Prueba</span>
+                                <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </div>
+                        </button>
 
-                    <button class="test-item" data-test="sociales-p3">
-                        <div class="test-number">03</div>
-                        <div class="test-details">
-                            <h4 class="test-name">Prueba 3</h4>
-                            <p class="test-meta">Sociales</p>
-                        </div>
-                        <div class="test-arrow">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="5" y1="12" x2="19" y2="12"/>
-                                <polyline points="12 5 19 12 12 19"/>
-                            </svg>
-                        </div>
-                    </button>
+                        <button class="test-card" data-test="sociales-p3">
+                            <div class="test-header">
+                                <div class="test-badge">P3</div>
+                                <div class="test-info">
+                                    <h4 class="test-title">Prueba 3</h4>
+                                    <p class="test-type">Sociales</p>
+                                </div>
+                            </div>
+                            <div class="test-action">
+                                <span class="action-text">Iniciar Prueba</span>
+                                <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </div>
+                        </button>
 
-                    <button class="test-item" data-test="sociales-p4">
-                        <div class="test-number">04</div>
-                        <div class="test-details">
-                            <h4 class="test-name">Prueba 4</h4>
-                            <p class="test-meta">Sociales</p>
-                        </div>
-                        <div class="test-arrow">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="5" y1="12" x2="19" y2="12"/>
-                                <polyline points="12 5 19 12 12 19"/>
-                            </svg>
-                        </div>
-                    </button>
-                </div>
-            </section>
-
-            <!-- Secciones Próximamente -->
-            <section class="subject-section disabled">
-                <div class="subject-header">
-                    <div class="subject-info">
-                        <h3 class="subject-title">Matemáticas</h3>
-                        <p class="subject-description">Razonamiento lógico-matemático y cálculo</p>
+                        <button class="test-card" data-test="sociales-p4">
+                            <div class="test-header">
+                                <div class="test-badge">P4</div>
+                                <div class="test-info">
+                                    <h4 class="test-title">Prueba 4</h4>
+                                    <p class="test-type">Sociales</p>
+                                </div>
+                            </div>
+                            <div class="test-action">
+                                <span class="action-text">Iniciar Prueba</span>
+                                <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </div>
+                        </button>
                     </div>
-                    <div class="subject-badge coming-soon">Próximamente</div>
                 </div>
-            </section>
+            </div>
 
-            <section class="subject-section disabled">
-                <div class="subject-header">
-                    <div class="subject-info">
-                        <h3 class="subject-title">Lenguaje y Comunicación</h3>
-                        <p class="subject-description">Comprensión lectora y gramática</p>
+            <!-- Tarjetas Próximamente -->
+            <div class="subject-card disabled">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            <path d="M9 3v18M3 9h18M3 15h18M15 3v18"/>
+                        </svg>
                     </div>
-                    <div class="subject-badge coming-soon">Próximamente</div>
+                    <div class="card-title-section">
+                        <h3 class="card-title">Matemáticas</h3>
+                        <p class="card-subtitle">Razonamiento Lógico • Cálculo</p>
+                    </div>
+                    <div class="card-status">
+                        <span class="status-badge coming">Próximamente</span>
+                    </div>
                 </div>
-            </section>
+            </div>
 
-            <section class="subject-section disabled">
-                <div class="subject-header">
-                    <div class="subject-info">
-                        <h3 class="subject-title">Inglés</h3>
-                        <p class="subject-description">Evaluación de competencias en idioma inglés</p>
+            <div class="subject-card disabled">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                        </svg>
                     </div>
-                    <div class="subject-badge coming-soon">Próximamente</div>
+                    <div class="card-title-section">
+                        <h3 class="card-title">Lenguaje y Comunicación</h3>
+                        <p class="card-subtitle">Comprensión Lectora • Gramática</p>
+                    </div>
+                    <div class="card-status">
+                        <span class="status-badge coming">Próximamente</span>
+                    </div>
                 </div>
-            </section>
+            </div>
+
+            <div class="subject-card disabled">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                    </div>
+                    <div class="card-title-section">
+                        <h3 class="card-title">Inglés</h3>
+                        <p class="card-subtitle">Competencias en Idioma Inglés</p>
+                    </div>
+                    <div class="card-status">
+                        <span class="status-badge coming">Próximamente</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
     <!-- Modal -->
     <div id="testModal" class="modal">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
+        <div class="modal-overlay"></div>
+        <div class="modal-wrapper">
             <div class="modal-header">
                 <div class="modal-brand">
                     <img src="images/logo.png" alt="Sparta Academy" class="modal-logo">
                     <span class="modal-title">SPARTA ACADEMY</span>
                 </div>
                 <button class="modal-close" id="closeModal">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="18" y1="6" x2="6" y2="18"/>
-                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <path d="M18 6L6 18M6 6l12 12"/>
                     </svg>
                 </button>
             </div>
             <div class="modal-body">
-                <iframe id="testFrame" src="" frameborder="0"></iframe>
+                <iframe id="testFrame" src=""></iframe>
             </div>
         </div>
     </div>
@@ -176,8 +231,13 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <p class="footer-text">&copy; 2024 Sparta Academy. Todos los derechos reservados.</p>
-                <p class="footer-version">Versión 1.0</p>
+                <div class="footer-logo">
+                    <img src="images/logo.png" alt="Sparta Academy">
+                </div>
+                <div class="footer-info">
+                    <p class="footer-text">&copy; 2024 Sparta Academy. Todos los derechos reservados.</p>
+                    <p class="footer-note">La función de guardar está inhabilitada • Versión 1.0</p>
+                </div>
             </div>
         </div>
     </footer>
