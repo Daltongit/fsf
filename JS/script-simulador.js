@@ -1,9 +1,9 @@
 // JS/script-simulador.js
 
-// (NUEVO) Importar la librería de Supabase
+// Importar la librería de Supabase
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-// (NUEVO) Inicializar Supabase (¡Usa tus claves!)
+// Inicializar Supabase (¡Usa tus claves!)
 const supabaseUrl = 'https://tgkbsaazxgnpllcwtbuk.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRna2JzYWF6eGducGxsY3d0YnVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxNzk0OTUsImV4cCI6MjA3Nzc1NTQ5NX0.877IdYJdJSczFaqCsz2P-w5uzAZvS7E6DzWTcwyT4IQ';
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let tiempoRestanteSeg;
     let TOTAL_PREGUNTAS_QUIZ = 50; // Default
 
-    // (MODIFICADO) Añadida la materia ppnn1
+    // (MODIFICADO) Añadidas las 4 materias PPNN
     const materias = {
         'sociales': 'Ciencias Sociales',
         'matematicas': 'Matemáticas y Física',
@@ -58,7 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
         'general': 'General (Todas)',
         'inteligencia': 'Inteligencia',
         'personalidad': 'Personalidad',
-        'ppnn1': 'Cuestionario 1 PPNN' // <-- NUEVO
+        'ppnn1': 'Cuestionario 1 PPNN',
+        'ppnn2': 'Cuestionario 2 PPNN',
+        'ppnn3': 'Cuestionario 3 PPNN',
+        'ppnn4': 'Cuestionario 4 PPNN'
     };
     const ordenGeneral = ['sociales', 'matematicas', 'lengua', 'ingles'];
     
@@ -78,19 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
         let quizDurationSeconds;
         let lobbyTiempoTexto;
 
-        // (MODIFICADO) Añadida la lógica para ppnn1
-        if (materiaKey === 'matematicas') {
-            quizDurationSeconds = 90 * 60;
-            lobbyTiempoTexto = "1 Hora y 30 Minutos (90 Minutos)";
-            TOTAL_PREGUNTAS_QUIZ = 50;
-        } else if (materiaKey === 'general') {
-            quizDurationSeconds = 180 * 60;
-            lobbyTiempoTexto = "3 Horas (180 Minutos)";
-            TOTAL_PREGUNTAS_QUIZ = 200;
-        } else if (materiaKey === 'ppnn1') { // <-- NUEVO
+        // (MODIFICADO) Lógica agrupada para PPNN
+        if (materiaKey.startsWith('ppnn')) {
             quizDurationSeconds = 60 * 60; // 1 Hora
             lobbyTiempoTexto = "1 Hora (60 Minutos)";
-            // NO definimos TOTAL_PREGUNTAS_QUIZ aquí, se calculará al cargar
+            // NO definimos TOTAL_PREGUNTAS_QUIZ, se calculará al cargar
             
             // Cambiar las instrucciones
             const h3Puntajes = lobbyContainer.querySelector('h3');
@@ -101,15 +96,25 @@ document.addEventListener('DOMContentLoaded', () => {
             if (ulPuntajes) ulPuntajes.remove();
             if (pImportante) pImportante.remove();
 
-            // Añadir las nuevas instrucciones
             const hr = lobbyContainer.querySelector('hr');
             if (hr) {
-                const newInstructions = document.createElement('p');
-                newInstructions.className = 'instrucciones-ppnn'; // Para estilo
-                newInstructions.innerHTML = '<strong>INSTRUCCIONES.-</strong> Mediante esta prueba se persigue que pienses rápido y eficazmente. Cada reactivo está seguido generalmente de cinco respuestas, de las cuales debes escoger la mejor.';
-                hr.after(newInstructions);
+                // Solo añade si no existe ya
+                if (!lobbyContainer.querySelector('.instrucciones-ppnn')) {
+                    const newInstructions = document.createElement('p');
+                    newInstructions.className = 'instrucciones-ppnn';
+                    newInstructions.innerHTML = '<strong>INSTRUCCIONES.-</strong> Mediante esta prueba se persigue que pienses rápido y eficazmente. Cada reactivo está seguido generalmente de cinco respuestas, de las cuales debes escoger la mejor.';
+                    hr.after(newInstructions);
+                }
             }
 
+        } else if (materiaKey === 'matematicas') {
+            quizDurationSeconds = 90 * 60;
+            lobbyTiempoTexto = "1 Hora y 30 Minutos (90 Minutos)";
+            TOTAL_PREGUNTAS_QUIZ = 50;
+        } else if (materiaKey === 'general') {
+            quizDurationSeconds = 180 * 60;
+            lobbyTiempoTexto = "3 Horas (180 Minutos)";
+            TOTAL_PREGUNTAS_QUIZ = 200;
         } else { // Default (sociales, lengua, ingles, personalidad, inteligencia)
             quizDurationSeconds = 60 * 60;
             lobbyTiempoTexto = "1 Hora (60 Minutos)";
@@ -120,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const lobbyTiempoDisplay = document.getElementById('lobby-tiempo');
         if (lobbyTiempoDisplay) lobbyTiempoDisplay.textContent = lobbyTiempoTexto;
-        // (MODIFICADO) Se actualiza el número de preguntas después en cargarPreguntas()
+        // Se actualiza el número de preguntas después en cargarPreguntas()
         if (lobbyPreguntasDisplay) lobbyPreguntasDisplay.textContent = TOTAL_PREGUNTAS_QUIZ;
 
         comenzarBtn.disabled = true;
@@ -180,20 +185,17 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const promesas = materiasACargar.map(m =>
                 fetch(`DATA/preguntas_${m}.json`)
-                    .then(res => res.ok ? res.json() : Promise.reject(`Fallo al cargar ${m}`))
+                    .then(res => {
+                        if (!res.ok) return Promise.reject(`Fallo al cargar ${m}.json`);
+                        return res.json();
+                    })
                     .then(data => ({ materia: m, preguntas: data }))
             );
             const resultados = await Promise.all(promesas);
             let totalPreguntasCargadas = 0;
             let todasLasPreguntasParaPrecarga = [];
+            
             resultados.forEach(res => {
-                 // Advertencias (no afectan a ppnn1)
-                 if (materia === 'general' && res.preguntas.length < 50) {
-                     console.warn(`Advertencia: La materia '${res.materia}' tiene solo ${res.preguntas.length} preguntas (se necesitan 50 para el modo General). Se usarán todas.`);
-                 }
-                 else if (materia !== 'general' && materia !== 'ppnn1' && res.preguntas.length < TOTAL_PREGUNTAS_QUIZ) {
-                      console.warn(`Advertencia: La materia '${res.materia}' tiene solo ${res.preguntas.length} preguntas (se necesitan ${TOTAL_PREGUNTAS_QUIZ}). Se usarán todas.`);
-                 }
                 preguntasPorMateria[res.materia] = res.preguntas;
                 totalPreguntasCargadas += res.preguntas.length;
                 todasLasPreguntasParaPrecarga = todasLasPreguntasParaPrecarga.concat(res.preguntas);
@@ -206,14 +208,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
             const materiaKey = params.get('materia');
             
-            if (materiaKey === 'ppnn1') {
+            if (materiaKey.startsWith('ppnn')) {
                 TOTAL_PREGUNTAS_QUIZ = totalPreguntasCargadas; // Usa el total cargado
             } else if (materiaKey === 'general') {
                 TOTAL_PREGUNTAS_QUIZ = 200; // Fijo
             } else {
-                TOTAL_PREGUNTAS_QUIZ = 50; // Default
+                // Advertencia para el resto si no tienen 50
+                if (preguntasPorMateria[materiaKey].length < 50) {
+                    console.warn(`Advertencia: La materia '${materiaKey}' tiene solo ${preguntasPorMateria[materiaKey].length} preguntas (se necesitan 50).`);
+                }
+                TOTAL_PREGUNTAS_QUIZ = 50;
             }
-            // Actualiza el lobby AHORA que sabemos el total
+            
             if (lobbyPreguntasDisplay) lobbyPreguntasDisplay.textContent = TOTAL_PREGUNTAS_QUIZ;
 
              await precargarImagenes(todasLasPreguntasParaPrecarga);
@@ -228,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
                  comenzarBtn.textContent = 'Comenzar Intento';
                  comenzarBtn.addEventListener('click', iniciarIntento);
             } else {
-                alert(`Error al cargar las preguntas o imágenes. ${error.message || ''}`);
+                alert(`Error al cargar las preguntas o imágenes. ${error.message || ''}. Revisa que el archivo 'preguntas_${materia}.json' exista en la carpeta DATA.`);
                 comenzarBtn.textContent = 'Error al Cargar';
             }
         }
@@ -254,19 +260,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
             TOTAL_PREGUNTAS_QUIZ = contadorPreguntas;
+        
+        } else if (materiaKey.startsWith('ppnn')) { // <-- NUEVO
+            // Para PPNN, toma TODAS las preguntas y las baraja
+            if (preguntasPorMateria[materiaKey] && preguntasPorMateria[materiaKey].length > 0) {
+                preguntasQuiz = [...preguntasPorMateria[materiaKey]].sort(() => Math.random() - 0.5);
+                TOTAL_PREGUNTAS_QUIZ = preguntasQuiz.length;
+            } else {
+                 console.error(`No hay preguntas cargadas para la materia ${materiaKey}`);
+                 preguntasQuiz = [];
+                 TOTAL_PREGUNTAS_QUIZ = 0;
+            }
 
-        } else { // Para materias individuales (incluyendo ppnn1)
+        } else { // Para materias individuales (sociales, mates, inteligencia, etc.)
              if (preguntasPorMateria[materiaKey] && preguntasPorMateria[materiaKey].length > 0) {
                 const preguntasBarajadas = [...preguntasPorMateria[materiaKey]].sort(() => Math.random() - 0.5);
-
-                if (materiaKey === 'ppnn1') {
-                    // Para PPNN, toma TODAS las preguntas (ya barajadas)
-                    preguntasQuiz = preguntasBarajadas;
-                } else {
-                    // Para el resto (sociales, mates, etc.), toma 50
-                    preguntasQuiz = preguntasBarajadas.slice(0, 50);
-                }
-                TOTAL_PREGUNTAS_QUIZ = preguntasQuiz.length; // Actualiza el total real
+                // Toma solo 50
+                preguntasQuiz = preguntasBarajadas.slice(0, 50);
+                TOTAL_PREGUNTAS_QUIZ = preguntasQuiz.length;
             } else {
                  console.error(`No hay preguntas cargadas para la materia ${materiaKey}`);
                  preguntasQuiz = [];
@@ -274,7 +285,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
          
-         // Actualiza el display por si acaso (aunque ya se hizo en cargarPreguntas)
          if (lobbyPreguntasDisplay) lobbyPreguntasDisplay.textContent = TOTAL_PREGUNTAS_QUIZ;
          respuestasUsuario = new Array(TOTAL_PREGUNTAS_QUIZ).fill(null);
     }
