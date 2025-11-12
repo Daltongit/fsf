@@ -47,8 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let indicePreguntaActual = 0;
     let cronometroInterval;
     let tiempoRestanteSeg;
-    let TOTAL_PREGUNTAS_QUIZ = 50;
+    let TOTAL_PREGUNTAS_QUIZ = 50; // Default
 
+    // (MODIFICADO) Añadida la materia ppnn1
     const materias = {
         'sociales': 'Ciencias Sociales',
         'matematicas': 'Matemáticas y Física',
@@ -56,7 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'ingles': 'Inglés',
         'general': 'General (Todas)',
         'inteligencia': 'Inteligencia',
-        'personalidad': 'Personalidad'
+        'personalidad': 'Personalidad',
+        'ppnn1': 'Cuestionario 1 PPNN' // <-- NUEVO
     };
     const ordenGeneral = ['sociales', 'matematicas', 'lengua', 'ingles'];
     
@@ -76,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let quizDurationSeconds;
         let lobbyTiempoTexto;
 
+        // (MODIFICADO) Añadida la lógica para ppnn1
         if (materiaKey === 'matematicas') {
             quizDurationSeconds = 90 * 60;
             lobbyTiempoTexto = "1 Hora y 30 Minutos (90 Minutos)";
@@ -84,11 +87,30 @@ document.addEventListener('DOMContentLoaded', () => {
             quizDurationSeconds = 180 * 60;
             lobbyTiempoTexto = "3 Horas (180 Minutos)";
             TOTAL_PREGUNTAS_QUIZ = 200;
-        } else if (materiaKey === 'personalidad' || materiaKey === 'inteligencia') {
-            quizDurationSeconds = 60 * 60;
+        } else if (materiaKey === 'ppnn1') { // <-- NUEVO
+            quizDurationSeconds = 60 * 60; // 1 Hora
             lobbyTiempoTexto = "1 Hora (60 Minutos)";
-            TOTAL_PREGUNTAS_QUIZ = 50;
-        } else {
+            // NO definimos TOTAL_PREGUNTAS_QUIZ aquí, se calculará al cargar
+            
+            // Cambiar las instrucciones
+            const h3Puntajes = lobbyContainer.querySelector('h3');
+            const ulPuntajes = lobbyContainer.querySelector('ul');
+            const pImportante = lobbyContainer.querySelector('p[style*="font-weight: 600"]');
+            
+            if (h3Puntajes) h3Puntajes.remove();
+            if (ulPuntajes) ulPuntajes.remove();
+            if (pImportante) pImportante.remove();
+
+            // Añadir las nuevas instrucciones
+            const hr = lobbyContainer.querySelector('hr');
+            if (hr) {
+                const newInstructions = document.createElement('p');
+                newInstructions.className = 'instrucciones-ppnn'; // Para estilo
+                newInstructions.innerHTML = '<strong>INSTRUCCIONES.-</strong> Mediante esta prueba se persigue que pienses rápido y eficazmente. Cada reactivo está seguido generalmente de cinco respuestas, de las cuales debes escoger la mejor.';
+                hr.after(newInstructions);
+            }
+
+        } else { // Default (sociales, lengua, ingles, personalidad, inteligencia)
             quizDurationSeconds = 60 * 60;
             lobbyTiempoTexto = "1 Hora (60 Minutos)";
             TOTAL_PREGUNTAS_QUIZ = 50;
@@ -98,13 +120,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const lobbyTiempoDisplay = document.getElementById('lobby-tiempo');
         if (lobbyTiempoDisplay) lobbyTiempoDisplay.textContent = lobbyTiempoTexto;
-        if (lobbyPreguntasDisplay) lobbyPreguntasDisplay.textContent = (materiaKey === 'general') ? '200' : '50';
+        // (MODIFICADO) Se actualiza el número de preguntas después en cargarPreguntas()
+        if (lobbyPreguntasDisplay) lobbyPreguntasDisplay.textContent = TOTAL_PREGUNTAS_QUIZ;
 
         comenzarBtn.disabled = true;
         comenzarBtn.textContent = 'Cargando recursos...';
         
         cargarPreguntas(materiaKey);
 
+        // Listeners
         siguienteBtn.addEventListener('click', irPreguntaSiguiente);
         terminarIntentoBtn.addEventListener('click', confirmarTerminarIntento);
         reiniciarBtn.addEventListener('click', () => { window.location.href = 'index.html'; });
@@ -163,10 +187,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let totalPreguntasCargadas = 0;
             let todasLasPreguntasParaPrecarga = [];
             resultados.forEach(res => {
+                 // Advertencias (no afectan a ppnn1)
                  if (materia === 'general' && res.preguntas.length < 50) {
                      console.warn(`Advertencia: La materia '${res.materia}' tiene solo ${res.preguntas.length} preguntas (se necesitan 50 para el modo General). Se usarán todas.`);
                  }
-                 else if (materia !== 'general' && res.preguntas.length < TOTAL_PREGUNTAS_QUIZ) {
+                 else if (materia !== 'general' && materia !== 'ppnn1' && res.preguntas.length < TOTAL_PREGUNTAS_QUIZ) {
                       console.warn(`Advertencia: La materia '${res.materia}' tiene solo ${res.preguntas.length} preguntas (se necesitan ${TOTAL_PREGUNTAS_QUIZ}). Se usarán todas.`);
                  }
                 preguntasPorMateria[res.materia] = res.preguntas;
@@ -176,6 +201,21 @@ document.addEventListener('DOMContentLoaded', () => {
              if (totalPreguntasCargadas === 0) {
                  throw new Error("No se cargaron preguntas de ninguna materia relevante.");
              }
+
+            // (MODIFICADO) Determinar el TOTAL_PREGUNTAS_QUIZ
+            const params = new URLSearchParams(window.location.search);
+            const materiaKey = params.get('materia');
+            
+            if (materiaKey === 'ppnn1') {
+                TOTAL_PREGUNTAS_QUIZ = totalPreguntasCargadas; // Usa el total cargado
+            } else if (materiaKey === 'general') {
+                TOTAL_PREGUNTAS_QUIZ = 200; // Fijo
+            } else {
+                TOTAL_PREGUNTAS_QUIZ = 50; // Default
+            }
+            // Actualiza el lobby AHORA que sabemos el total
+            if (lobbyPreguntasDisplay) lobbyPreguntasDisplay.textContent = TOTAL_PREGUNTAS_QUIZ;
+
              await precargarImagenes(todasLasPreguntasParaPrecarga);
              console.log("¡Imágenes precargadas con éxito!");
              comenzarBtn.disabled = false;
@@ -194,12 +234,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
+    // (MODIFICADO)
     function prepararQuiz() {
         const params = new URLSearchParams(window.location.search);
         const materiaKey = params.get('materia') || 'sociales';
         preguntasQuiz = [];
-        let contadorPreguntas = 0;
+        
         if (materiaKey === 'general') {
+            let contadorPreguntas = 0;
             TOTAL_PREGUNTAS_QUIZ = 0; 
             ordenGeneral.forEach(materia => {
                 if (preguntasPorMateria[materia] && preguntasPorMateria[materia].length > 0) {
@@ -212,19 +254,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
             TOTAL_PREGUNTAS_QUIZ = contadorPreguntas;
-        } else {
-             let numPreguntasDeseadas = 50;
-             if (materiaKey === 'matematicas') numPreguntasDeseadas = 50;
+
+        } else { // Para materias individuales (incluyendo ppnn1)
              if (preguntasPorMateria[materiaKey] && preguntasPorMateria[materiaKey].length > 0) {
                 const preguntasBarajadas = [...preguntasPorMateria[materiaKey]].sort(() => Math.random() - 0.5);
-                preguntasQuiz = preguntasBarajadas.slice(0, numPreguntasDeseadas);
-                TOTAL_PREGUNTAS_QUIZ = preguntasQuiz.length;
+
+                if (materiaKey === 'ppnn1') {
+                    // Para PPNN, toma TODAS las preguntas (ya barajadas)
+                    preguntasQuiz = preguntasBarajadas;
+                } else {
+                    // Para el resto (sociales, mates, etc.), toma 50
+                    preguntasQuiz = preguntasBarajadas.slice(0, 50);
+                }
+                TOTAL_PREGUNTAS_QUIZ = preguntasQuiz.length; // Actualiza el total real
             } else {
                  console.error(`No hay preguntas cargadas para la materia ${materiaKey}`);
                  preguntasQuiz = [];
                  TOTAL_PREGUNTAS_QUIZ = 0;
             }
         }
+         
+         // Actualiza el display por si acaso (aunque ya se hizo en cargarPreguntas)
          if (lobbyPreguntasDisplay) lobbyPreguntasDisplay.textContent = TOTAL_PREGUNTAS_QUIZ;
          respuestasUsuario = new Array(TOTAL_PREGUNTAS_QUIZ).fill(null);
     }
@@ -339,7 +389,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // (NUEVO) Función para guardar en Supabase
     async function guardarResultadoEnSupabase(resultado) {
         try {
-            // Deshabilita los botones de reintento/inicio mientras guarda
             retryBtn.disabled = true;
             reiniciarBtn.disabled = true;
 
@@ -365,7 +414,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error("Error al guardar resultado en Supabase:", error.message);
              alert("¡Error! No se pudo guardar tu resultado en el servidor. Revisa tu conexión. Tu resultado local se mostrará, pero no se guardará en el reporte.");
         } finally {
-            // Vuelve a habilitar los botones
             retryBtn.disabled = false;
             reiniciarBtn.disabled = false;
         }
@@ -384,13 +432,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    async function mostrarResultadosPantalla() { // (MODIFICADO) ahora es async
+    async function mostrarResultadosPantalla() {
         simuladorContainer.style.display = 'none';
         resultadosContainer.style.display = 'block';
         
         const { puntaje, correctas, incorrectas, enBlanco } = calcularResultados();
         
-        // (MODIFICADO) Guarda el resultado en Supabase
         try {
             const userInfo = getUserInfo(); // {usuario, nombre, rol, ciudad}
             const params = new URLSearchParams(window.location.search);
@@ -404,17 +451,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     materia: nombreMateria,
                     puntaje: puntaje,
                     total_preguntas: TOTAL_PREGUNTAS_QUIZ,
-                    ciudad: userInfo.ciudad // Añade la ciudad
+                    ciudad: userInfo.ciudad
                 };
                 
-                // (NUEVO) Llama a la función de guardado
                 await guardarResultadoEnSupabase(result);
-
             }
         } catch (e) {
             console.error("Error al obtener info de usuario para guardar:", e);
         }
-        // --- Fin de guardar ---
 
         mostrarRevision(puntaje, correctas, incorrectas, enBlanco);
     }
