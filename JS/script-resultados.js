@@ -6,20 +6,7 @@ const supabaseUrl = 'https://tgkbsaazxgnpllcwtbuk.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRna2JzYWF6eGducGxsY3d0YnVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIxNzk0OTUsImV4cCI6MjA3Nzc1NTQ5NX0.877IdYJdJSczFaqCsz2P-w5uzAZvS7E6DzWTcwyT4IQ';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// (NUEVO) Lista de materias (debe coincidir con script-simulador.js)
-const materias = {
-    'sociales': 'Ciencias Sociales',
-    'matematicas': 'Matemáticas y Física',
-    'lengua': 'Lengua y Literatura',
-    'ingles': 'Inglés',
-    'general': 'General (Todas)',
-    'inteligencia': 'Inteligencia',
-    'personalidad': 'Personalidad',
-    'ppnn1': 'Cuestionario 1 PPNN',
-    'ppnn2': 'Cuestionario 2 PPNN',
-    'ppnn3': 'Cuestionario 3 PPNN',
-    'ppnn4': 'Cuestionario 4 PPNN'
-};
+// (ELIMINADO) El objeto 'materias' estático ya no es necesario
 
 // Inicializa jsPDF (global)
 const { jsPDF } = window.jspdf;
@@ -55,15 +42,24 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'bajo';
     }
 
-    // (NUEVO) Función para llenar el filtro de materias
-    function popularFiltroMaterias() {
-        // Itera sobre el objeto de materias y crea las opciones
-        for (const [key, value] of Object.entries(materias)) {
-            const option = document.createElement('option');
-            option.value = value; // El valor es el nombre (Ej: "Ciencias Sociales")
-            option.textContent = value; // El texto es el nombre
-            filtroMateria.appendChild(option);
-        }
+    // (MODIFICADO) Esta función ahora lee los datos de Supabase
+    function popularFiltroMaterias(intentos) {
+        // Extrae nombres de materias únicos de los resultados
+        const materiasUnicas = [...new Set(intentos.map(intento => intento.materia))];
+        materiasUnicas.sort(); // Ordena alfabéticamente
+
+        // Limpia el filtro (excepto la opción "Todas")
+        filtroMateria.innerHTML = '<option value="Todas">Todas las Materias</option>';
+        
+        // Añade las materias encontradas
+        materiasUnicas.forEach(materia => {
+            if (materia) { // Evita nulos o vacíos
+                const option = document.createElement('option');
+                option.value = materia;
+                option.textContent = materia;
+                filtroMateria.appendChild(option);
+            }
+        });
     }
     
     async function cargarDatosIniciales() {
@@ -71,9 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
         reporteContainer.innerHTML = '<p class="no-intentos">Cargando datos...</p>';
         
         try {
-            // (MODIFICADO) Llama a popularFiltroMaterias()
-            popularFiltroMaterias();
-
             const [usuariosRes, intentosRes] = await Promise.all([
                 fetch('DATA/usuarios.json').then(res => res.json()),
                 supabase.from('resultados').select('*')
@@ -84,6 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (intentosRes.error) throw intentosRes.error;
             allAttempts = intentosRes.data;
 
+            // (MODIFICADO) Llama a la función para poblar el filtro
+            popularFiltroMaterias(allAttempts);
+            
             renderizarListaUsuarios();
 
         } catch (error) {
@@ -409,7 +405,6 @@ document.addEventListener('DOMContentLoaded', () => {
             startY = doc.autoTable.previous.finalY + 15;
         }
 
-        // (CORREGIDO) El nombre del archivo ahora termina en .pdf
         doc.save(`reporte_pdf_${usuarioInfo.usuario}.pdf`);
     }
     
