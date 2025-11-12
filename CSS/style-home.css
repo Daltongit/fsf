@@ -98,3 +98,18 @@ main { flex: 1; padding: 2rem; position: relative; display: flex; align-items: c
     .seleccion-container { padding: 2rem 1.5rem; }
      .materias-grid > *:last-child:nth-child(odd) { grid-column: auto; }
 }
+
+/* (NUEVO) Estilo para botón deshabilitado (Próximamente) */
+.disabled-card {
+    background-color: #f1f1f1;
+    color: #aaa;
+    border-color: #e0e0e0;
+    cursor: not-allowed;
+    pointer-events: none; /* Evita que se pueda hacer clic */
+}
+.disabled-card:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: #e0e0e0;
+    color: #aaa;
+}
